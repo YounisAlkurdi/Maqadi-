@@ -1,4 +1,4 @@
-export function renderItemRow(item, membersById, { onToggle }) {
+export function renderItemRow(item, membersById, { onToggle, onEdit }) {
   const isBought = item.status === "bought";
   const row = document.createElement("li");
   row.className = isBought ? "item-row item-row--bought" : "item-row";
@@ -61,6 +61,16 @@ export function renderItemRow(item, membersById, { onToggle }) {
     memberWrap.appendChild(dot);
     memberWrap.appendChild(memberName);
     meta.appendChild(memberWrap);
+  }
+
+  if (onEdit) {
+    const editBtn = document.createElement("button");
+    editBtn.type = "button";
+    editBtn.className = "item-edit-btn";
+    editBtn.setAttribute("aria-label", `تعديل ${item.name}`);
+    editBtn.textContent = "⋮";
+    editBtn.addEventListener("click", () => onEdit(item));
+    meta.appendChild(editBtn);
   }
 
   row.appendChild(checkBtn);
