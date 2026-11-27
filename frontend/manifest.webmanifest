@@ -1,0 +1,20 @@
+{
+  "name": "طلبات البيت — مقاضي",
+  "short_name": "مقاضي",
+  "description": "قائمة مقاضي العائلة المشتركة",
+  "start_url": "/list.html",
+  "scope": "/",
+  "display": "standalone",
+  "dir": "rtl",
+  "lang": "ar",
+  "theme_color": "#2B7A78",
+  "background_color": "#FAF8F5",
+  "icons": [
+    {
+      "src": "/icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
