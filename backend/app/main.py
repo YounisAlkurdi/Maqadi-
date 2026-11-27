@@ -4,6 +4,7 @@ from fastapi import APIRouter, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 
+from app.composition import create_lifespan
 from app.config import get_settings
 
 FRONTEND_DIR = Path(__file__).resolve().parents[2] / "frontend"
@@ -12,7 +13,11 @@ FRONTEND_DIR = Path(__file__).resolve().parents[2] / "frontend"
 def create_app() -> FastAPI:
     """Create and configure the FastAPI application."""
     settings = get_settings()
-    application = FastAPI(title="Maqadi (طلبات البيت)", version="0.1.0")
+    application = FastAPI(
+        title="Maqadi (طلبات البيت)",
+        version="0.1.0",
+        lifespan=create_lifespan(settings),
+    )
 
     if settings.cors_origin_list:
         application.add_middleware(
