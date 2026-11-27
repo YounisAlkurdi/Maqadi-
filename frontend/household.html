@@ -18,13 +18,40 @@
     <main class="app-main">
       <div class="main-column">
         <header class="page-header">
-          <h1 class="page-title">البيت</h1>
-          <p class="page-subtitle">قريباً في المرحلة F12.</p>
+          <h1 id="household-title" class="page-title">البيت</h1>
+          <p id="household-subtitle" class="page-subtitle">جاري التحميل…</p>
         </header>
+
+        <div id="household-error" class="alert-error" role="alert" hidden></div>
+
+        <section class="card household-card">
+          <h2 class="section-title">رمز الدعوة</h2>
+          <p class="page-subtitle">شارك هذا الرمز مع أفراد عائلتك للانضمام لنفس القائمة.</p>
+          <div class="invite-code-box">
+            <code id="invite-code-value" class="invite-code-text" dir="ltr">------</code>
+            <div class="invite-code-actions">
+              <button type="button" id="copy-invite-btn" class="btn btn-primary">نسخ الرمز</button>
+              <button type="button" id="rotate-invite-btn" class="btn btn-secondary">تجديد الرمز</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="card household-card">
+          <h2 class="section-title">أفراد البيت</h2>
+          <ul id="members-list" class="members-list"></ul>
+        </section>
+
+        <section class="card household-card">
+          <h2 class="section-title">الحساب</h2>
+          <div>
+            <button type="button" id="logout-btn" class="btn btn-text btn-danger-text">تسجيل الخروج</button>
+          </div>
+        </section>
       </div>
     </main>
     <nav id="app-tabbar" class="bottom-tab-bar" aria-label="التنقل السفلي"></nav>
   </div>
+  <div id="toast-root"></div>
   <script type="module" src="js/pages/household.js"></script>
 </body>
 </html>
