@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_dashboard" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@100..900&display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "secondary-container": "#d5e3fd", "tertiary-fixed": "#dae2fd", "inverse-on-surface": "#eff1f3", "secondary-fixed": "#d5e3fd", "tertiary-container": "#676f86", "surface-tint": "#006d30", "surface-container-highest": "#e0e3e5", "on-error-container": "#93000a", "on-primary-fixed-variant": "#005323", "outline": "#6f7a6e", "primary-fixed": "#95f8a7", "on-primary": "#ffffff", "error-container": "#ffdad6", "inverse-primary": "#79db8d", "on-tertiary-container": "#f2f3ff", "primary-fixed-dim": "#79db8d", "on-surface": "#191c1e", "surface-container": "#eceef0", "primary": "#00652c", "outline-variant": "#becabc", "inverse-surface": "#2d3133", "on-secondary-fixed-variant": "#3a485c", "error": "#ba1a1a", "background": "#f7f9fb", "secondary-fixed-dim": "#b9c7e0", "on-primary-fixed": "#00210a", "on-background": "#191c1e", "surface-container-low": "#f2f4f6", "on-secondary-container": "#57657b", "primary-container": "#15803d", "surface-dim": "#d8dadc", "secondary": "#515f74", "tertiary-fixed-dim": "#bec6e0", "on-tertiary-fixed-variant": "#3f465c", "surface-container-high": "#e6e8ea", "on-secondary-fixed": "#0d1c2f", "on-primary-container": "#d3ffd5", "on-surface-variant": "#3f493f", "surface-variant": "#e0e3e5", "on-error": "#ffffff", "on-secondary": "#ffffff", "surface-bright": "#f7f9fb", "surface": "#f7f9fb", "surface-container-lowest": "#ffffff", "on-tertiary-fixed": "#131b2e", "on-tertiary": "#ffffff", "tertiary": "#4f576d" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "space-xs": "0.25rem", "space-sm": "0.5rem", "gutter": "1rem", "margin": "1rem", "gutter-lg": "2rem", "gutter-md": "1.5rem", "margin-lg": "3rem", "space-xl": "2rem", "space-md": "1rem", "margin-md": "2rem", "space-lg": "1.5rem" }, "fontFamily": { "title-sm": ["IBM Plex Sans"], "headline-lg": ["IBM Plex Sans"], "label-sm": ["IBM Plex Sans"], "headline-md": ["IBM Plex Sans"], "body-sm": ["IBM Plex Sans"], "headline-xl": ["IBM Plex Sans"], "code": ["IBM Plex Sans"], "label-md": ["IBM Plex Sans"], "label-lg": ["IBM Plex Sans"], "headline-lg-mobile": ["IBM Plex Sans"], "body-md": ["IBM Plex Sans"], "body-lg": ["IBM Plex Sans"], "title-md": ["IBM Plex Sans"], "headline-xl-mobile": ["IBM Plex Sans"], "headline-sm": ["IBM Plex Sans"] }, "fontSize": { "title-sm": ["14px", { "lineHeight": "20px", "fontWeight": "600" }], "headline-lg": ["30px", { "lineHeight": "38px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "label-sm": ["11px", { "lineHeight": "14px", "fontWeight": "500" }], "headline-md": ["22px", { "lineHeight": "28px", "letterSpacing": "-0.005em", "fontWeight": "600" }], "body-sm": ["12px", { "lineHeight": "18px", "fontWeight": "400" }], "headline-xl": ["36px", { "lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "600" }], "code": ["13px", { "lineHeight": "18px", "fontWeight": "400" }], "label-md": ["12px", { "lineHeight": "16px", "fontWeight": "500" }], "label-lg": ["14px", { "lineHeight": "20px", "fontWeight": "500" }], "headline-lg-mobile": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "body-md": ["14px", { "lineHeight": "20px", "fontWeight": "400" }], "body-lg": ["16px", { "lineHeight": "24px", "fontWeight": "400" }], "title-md": ["16px", { "lineHeight": "22px", "fontWeight": "600" }], "headline-xl-mobile": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "headline-sm": ["18px", { "lineHeight": "24px", "fontWeight": "600" }] } } } };</script></head><body class="bg-surface font-body-md text-on-surface antialiased"><aside class="fixed right-0 top-0 h-full w-[260px] bg-surface-container-lowest z-50 flex flex-col justify-between p-space-md shadow-[0_1px_8px_rgba(0,0,0,0.04)] select-none"><div class="flex flex-col gap-space-lg"><div class="flex items-center gap-space-sm px-space-xs"><div class="w-10 h-10 rounded-xl bg-primary-container flex items-center justify-center text-on-primary shadow-sm"><span class="material-symbols-outlined text-[22px]">shopping_bag</span></div><div class="flex flex-col"><span class="font-title-md text-title-md text-on-surface tracking-tight leading-snug">طلبات البيت</span><span class="font-label-sm text-label-sm text-on-surface-variant">تنظيم مقاضي العائلة</span></div></div><div class="bg-surface-container-low rounded-xl p-space-sm flex items-center justify-between"><div class="flex items-center gap-space-sm"><div class="relative"><div class="w-8 h-8 rounded-full bg-surface-container-highest flex items-center justify-center text-on-surface font-title-sm text-title-sm">ب</div><span class="absolute bottom-0 left-0 w-2.5 h-2.5 rounded-full bg-primary ring-2 ring-surface-container-lowest"></span></div><div class="flex flex-col"><span class="font-title-sm text-title-sm text-on-surface">بيت أبو أحمد</span><span class="font-label-sm text-label-sm text-on-surface-variant">4 أفراد نشطين</span></div></div><button class="text-on-surface-variant hover:text-on-surface p-space-xs"><span class="material-symbols-outlined text-[18px]">unfold_more</span></button></div><nav class="flex flex-col gap-space-xs" data-active-classes="bg-primary-container text-on-primary-container font-title-sm rounded-lg"><a aria-current="page" class="flex items-center gap-space-sm px-space-md py-space-sm transition-colors bg-primary-container text-on-primary-container font-title-sm rounded-lg" data-path="shopping-list" href="#"><span class="material-symbols-outlined text-[20px]">checklist</span><span>القائمة</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="market-mode" href="#"><span class="material-symbols-outlined text-[20px]">storefront</span><span>وضع السوق</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="history" href="#"><span class="material-symbols-outlined text-[20px]">history</span><span>السجل</span></a><a class="flex items-center gap-space-sm px-space-md py-space-sm rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors font-body-md text-body-md" data-path="household-members" href="#"><span class="material-symbols-outlined text-[20px]">group</span><span>أفراد البيت</span></a></nav></div><div class="bg-surface-container-low rounded-xl p-space-md flex flex-col gap-space-sm"><div class="flex items-center justify-between"><span class="font-label-sm text-label-sm text-on-surface-variant">رمز دعوة العائلة</span><span class="bg-primary-fixed text-on-primary-fixed font-label-sm text-label-sm px-space-xs py-0.5 rounded-full">نشط</span></div><div class="flex items-center justify-between bg-surface-container-lowest px-space-sm py-space-xs rounded-lg shadow-sm"><span class="font-code text-code font-bold tracking-wider text-on-surface">K7M2-9QXP</span><button class="text-primary hover:text-surface-tint flex items-center justify-center p-space-xs"><span class="material-symbols-outlined text-[18px]">content_copy</span></button></div></div></aside><div class="pr-[260px]"><header class="fixed top-0 right-[260px] left-0 h-16 bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)] z-40"><div class="h-16 w-full px-gutter-md flex items-center justify-between"><div class="flex items-center gap-space-md flex-1 max-w-lg"><div class="relative w-full max-w-xs"><span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]">search</span><input class="w-full h-10 pr-9 pl- space-md bg-surface-container-low border-0 rounded-lg text-on-surface placeholder:text-on-surface-variant font-body-sm text-body-sm focus:bg-surface-container-lowest focus:ring-1 focus:ring-primary outline-none transition-all" placeholder="بحث في الطلبات والمؤن..." type="text"/></div></div><div class="flex items-center gap-space-md"><div class="flex items-center gap-space-xs"><div class="flex -space-x-2 space-x-reverse"><div class="w-7 h-7 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center font-label-sm text-label-sm ring-2 ring-surface">أ</div><div class="w-7 h-7 rounded-full bg-tertiary-fixed text-on-tertiary-fixed flex items-center justify-center font-label-sm text-label-sm ring-2 ring-surface">س</div><div class="w-7 h-7 rounded-full bg-primary-fixed text-on-primary-fixed flex items-center justify-center font-label-sm text-label-sm ring-2 ring-surface">م</div></div><button class="flex items-center gap-space-xs px-space-sm py-1.5 rounded-lg bg-surface-container-high hover:bg-surface-container-highest text-on-surface font-label-md text-label-md transition-colors"><span class="material-symbols-outlined text-[16px]">person_add</span><span>مشاركة</span></button></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shadow-sm"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="w-full pt-16 px-gutter-md pb-space-xl bg-surface"><div class="flex flex-col w-full">
+<div class="w-full max-w-[1240px] mx-auto py-space-md">
+<!-- Top Contextual Sub-bar / Mode Quick Status -->
+<div class="flex items-center justify-between pb-space-md mb-space-md bg-transparent">
+<div class="flex items-center gap-space-sm">
+<span class="inline-flex items-center justify-center w-2.5 h-2.5 rounded-full bg-primary animate-pulse"></span>
+<span class="font-title-sm text-title-sm text-on-surface">مزامنة حية مع أفراد المنزل</span>
+<span class="text-outline text-body-sm">•</span>
+<span class="font-body-sm text-body-sm text-secondary">آخر تعديل بواسطة <strong class="font-title-sm text-on-surface">سارة</strong> منذ 4 دقائق</span>
+</div>
+<div class="flex items-center gap-space-xs">
+<div class="inline-flex items-center bg-surface-container-high p-0.5 rounded-lg">
+<button class="flex items-center gap-1.5 px-space-sm py-1 rounded bg-surface-container-lowest text-primary font-title-sm text-title-sm shadow-sm transition-all">
+<span class="material-symbols-outlined text-[18px]">format_list_bulleted</span>
+<span>حسب التصنيف</span>
+</button>
+<button class="flex items-center gap-1.5 px-space-sm py-1 rounded text-secondary hover:text-on-surface font-body-sm text-body-sm transition-colors">
+<span class="material-symbols-outlined text-[18px]">storefront</span>
+<span>ترتيب حسب المتجر</span>
+</button>
+<button class="flex items-center gap-1.5 px-space-sm py-1 rounded text-secondary hover:text-on-surface font-body-sm text-body-sm transition-colors">
+<span class="material-symbols-outlined text-[18px]">person</span>
+<span>حسب الشخص</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Main 2-Column Responsive Workspace (Center Primary Area + Left Quick Ops Rail) -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter-md items-start">
+<!-- Primary Core List Stream (Takes 8 Cols on Desktop) -->
+<section class="lg:col-span-8 flex flex-col gap-space-md order-1">
+<!-- Header & Counter -->
+<div class="flex items-baseline justify-between bg-surface-container-lowest p-space-md rounded-xl shadow-sm">
+<div class="flex items-center gap-space-sm">
+<h1 class="font-headline-md text-headline-md text-on-surface tracking-tight">قائمة المقاضي</h1>
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full font-label-md text-label-md bg-primary-fixed text-on-primary-fixed font-semibold">
+              7 أغراض مطلوبة
+            </span>
+</div>
+<div class="flex items-center gap-space-xs">
+<button class="p-1.5 rounded-lg text-secondary hover:text-on-surface hover:bg-surface-container transition-colors" title="تصدير القائمة">
+<span class="material-symbols-outlined text-[20px]">ios_share</span>
+</button>
+<button class="p-1.5 rounded-lg text-secondary hover:text-on-surface hover:bg-surface-container transition-colors" title="إعدادات القائمة">
+<span class="material-symbols-outlined text-[20px]">tune</span>
+</button>
+</div>
+</div>
+<!-- Linear-style Quick Add Input Bar -->
+<div class="relative bg-surface-container-lowest rounded-xl shadow-sm p-1.5 flex items-center transition-all focus-within:ring-2 focus-within:ring-primary/20">
+<span class="material-symbols-outlined text-secondary pr-3 text-[22px]">add_circle</span>
+<input class="flex-1 bg-transparent px-space-sm py-2 text-on-surface placeholder:text-outline font-body-md text-body-md outline-none" id="quick-add-input" placeholder="أضف غرض... مثلاً: لبن، 2 كيلو بندورة، مناديل وجه" type="text"/>
+<div class="flex items-center gap-space-xs pl-1">
+<button class="hidden sm:flex items-center gap-1 px-space-sm py-1 rounded bg-surface-container text-secondary text-label-sm font-label-sm hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-[15px]">label</span>
+<span>تصنيف تلقائي</span>
+</button>
+<button class="flex items-center gap-1.5 px-space-md py-2 rounded-lg bg-primary-container text-on-primary font-title-sm text-title-sm hover:opacity-95 active:scale-95 shadow-sm transition-all">
+<span>أضف</span>
+<kbd class="font-code text-code text-[11px] bg-primary/20 px-1 py-0.5 rounded text-on-primary-container leading-none">↵</kbd>
+</button>
+</div>
+</div>
+<!-- CATEGORY 1: خضار وفواكه -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden transition-all">
+<div class="flex items-center justify-between px-space-md py-space-sm bg-surface-container-low/60 cursor-pointer select-none">
+<div class="flex items-center gap-space-sm">
+<span class="w-7 h-7 rounded-lg bg-emerald-50 text-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">nutrition</span>
+</span>
+<h2 class="font-title-md text-title-md text-on-surface">خضار وفواكه</h2>
+<span class="w-5 h-5 rounded-full bg-surface-container-high text-secondary flex items-center justify-center font-label-sm text-label-sm">3</span>
+</div>
+<button class="text-secondary hover:text-on-surface p-1">
+<span class="material-symbols-outlined text-[20px]">expand_more</span>
+</button>
+</div>
+<div class="divide-y divide-surface-container-low">
+<!-- Row 1 -->
+<div class="group flex items-center justify-between h-14 px-space-md hover:bg-surface-container-low/40 transition-colors">
+<div class="flex items-center gap-space-md flex-1">
+<button class="w-5 h-5 rounded-md bg-surface-container-lowest ring-2 ring-outline-variant hover:ring-primary flex items-center justify-center transition-all" onclick="toggleItem(this)">
+<span class="material-symbols-outlined text-[16px] text-white opacity-0 transition-opacity">check</span>
+</button>
+<span class="font-title-md text-title-md text-on-surface group-hover:text-primary transition-colors">بندورة طازجة</span>
+<span class="px-2 py-0.5 rounded-full bg-surface-container-high text-secondary font-label-sm text-label-sm">1 كيلو</span>
+</div>
+<div class="flex items-center gap-space-md">
+<div class="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-surface-container-low text-on-surface">
+<span class="w-4 h-4 rounded-full bg-secondary-container text-on-secondary-container font-label-sm text-[10px] flex items-center justify-center font-semibold">أ</span>
+<span class="font-label-sm text-label-sm text-secondary">أمي</span>
+</div>
+<div class="opacity-0 group-hover:opacity-100 flex items-center gap-0.5 transition-opacity">
+<button class="p-1 rounded text-secondary hover:text-on-surface hover:bg-surface-container"><span class="material-symbols-outlined text-[18px]">edit</span></button>
+<button class="p-1 rounded text-secondary hover:text-error hover:bg-error-container/40"><span class="material-symbols-outlined text-[18px]">delete</span></button>
+</div>
+</div>
+</div>
+<!-- Row 2 -->
+<div class="group flex items-center justify-between h-14 px-space-md hover:bg-surface-container-low/40 transition-colors">
+<div class="flex items-center gap-space-md flex-1">
+<button class="w-5 h-5 rounded-md bg-surface-container-lowest ring-2 ring-outline-variant hover:ring-primary flex items-center justify-center transition-all" onclick="toggleItem(this)">
+<span class="material-symbols-outlined text-[16px] text-white opacity-0 transition-opacity">check</span>
+</button>
+<span class="font-title-md text-title-md text-on-surface group-hover:text-primary transition-colors">خيار بلدي</span>
+<span class="px-2 py-0.5 rounded-full bg-surface-container-high text-secondary font-label-sm text-label-sm">نصف كيلو</span>
+</div>
+<div class="flex items-center gap-space-md">
+<div class="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-surface-container-low text-on-surface">
+<span class="w-4 h-4 rounded-full bg-primary-fixed text-on-primary-fixed font-label-sm text-[10px] flex items-center justify-center font-semibold">ب</span>
+<span class="font-label-sm text-label-sm text-secondary">أبو أحمد</span>
+</div>
+<div class="opacity-0 group-hover:opacity-100 flex items-center gap-0.5 transition-opacity">
+<button class="p-1 rounded text-secondary hover:text-on-surface hover:bg-surface-container"><span class="material-symbols-outlined text-[18px]">edit</span></button>
+<button class="p-1 rounded text-secondary hover:text-error hover:bg-error-container/40"><span class="material-symbols-outlined text-[18px]">delete</span></button>
+</div>
+</div>
+</div>
+<!-- Row 3 -->
+<div class="group flex items-center justify-between h-14 px-space-md hover:bg-surface-container-low/40 transition-colors">
+<div class="flex items-center gap-space-md flex-1">
+<button class="w-5 h-5 rounded-md bg-surface-container-lowest ring-2 ring-outline-variant hover:ring-primary flex items-center justify-center transition-all" onclick="toggleItem(this)">
+<span class="material-symbols-outlined text-[16px] text-white opacity-0 transition-opacity">check</span>
+</button>
+<span class="font-title-md text-title-md text-on-surface group-hover:text-primary transition-colors">بطاطا قلي</span>
+<span class="px-2 py-0.5 rounded-full bg-surface-container-high text-secondary font-label-sm text-label-sm">2 كيلو</span>
+</div>
+<div class="flex items-center gap-space-md">
+<div class="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-surface-container-low text-on-surface">
+<span class="w-4 h-4 rounded-full bg-tertiary-fixed text-on-tertiary-fixed font-label-sm text-[10px] flex items-center justify-center font-semibold">س</span>
+<span class="font-label-sm text-label-sm text-secondary">سارة</span>
+</div>
+<div class="opacity-0 group-hover:opacity-100 flex items-center gap-0.5 transition-opacity">
+<button class="p-1 rounded text-secondary hover:text-on-surface hover:bg-surface-container"><span class="material-symbols-outlined text-[18px]">edit</span></button>
+<button class="p-1 rounded text-secondary hover:text-error hover:bg-error-container/40"><span class="material-symbols-outlined text-[18px]">delete</span></button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- CATEGORY 2: ألبان وبيض -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden transition-all">
+<div class="flex items-center justify-between px-space-md py-space-sm bg-surface-container-low/60 cursor-pointer select-none">
+<div class="flex items-center gap-space-sm">
+<span class="w-7 h-7 rounded-lg bg-blue-50 text-secondary flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">egg</span>
+</span>
+<h2 class="font-title-md text-title-md text-on-surface">ألبان وبيض</h2>
+<span class="w-5 h-5 rounded-full bg-surface-container-high text-secondary flex items-center justify-center font-label-sm text-label-sm">2</span>
+</div>
+<button class="text-secondary hover:text-on-surface p-1">
+<span class="material-symbols-outlined text-[20px]">expand_more</span>
+</button>
+</div>
+<div class="divide-y divide-surface-container-low">
+<!-- Row 1 (Urgent item) -->
+<div class="group flex items-center justify-between h-14 px-space-md hover:bg-surface-container-low/40 transition-colors">
+<div class="flex items-center gap-space-md flex-1">
+<button class="w-5 h-5 rounded-md bg-surface-container-lowest ring-2 ring-outline-variant hover:ring-primary flex items-center justify-center transition-all" onclick="toggleItem(this)">
+<span class="material-symbols-outlined text-[16px] text-white opacity-0 transition-opacity">check</span>
+</button>
+<span class="font-title-md text-title-md text-on-surface group-hover:text-primary transition-colors">لبن زبادي كامل الدسم</span>
+<span class="px-2 py-0.5 rounded-full bg-surface-container-high text-secondary font-label-sm text-label-sm">علبة كبيرة</span>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-error-container text-on-error-container font-label-sm text-label-sm font-semibold">
+<span>مستعجل 🔥</span>
+</span>
+</div>
+<div class="flex items-center gap-space-md">
+<div class="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-surface-container-low text-on-surface">
+<span class="w-4 h-4 rounded-full bg-primary-fixed-dim text-on-primary-fixed-variant font-label-sm text-[10px] flex items-center justify-center font-semibold">ي</span>
+<span class="font-label-sm text-label-sm text-secondary">يونس</span>
+</div>
+<div class="opacity-0 group-hover:opacity-100 flex items-center gap-0.5 transition-opacity">
+<button class="p-1 rounded text-secondary hover:text-on-surface hover:bg-surface-container"><span class="material-symbols-outlined text-[18px]">edit</span></button>
+<button class="p-1 rounded text-secondary hover:text-error hover:bg-error-container/40"><span class="material-symbols-outlined text-[18px]">delete</span></button>
+</div>
+</div>
+</div>
+<!-- Row 2 -->
+<div class="group flex items-center justify-between h-14 px-space-md hover:bg-surface-container-low/40 transition-colors">
+<div class="flex items-center gap-space-md flex-1">
+<button class="w-5 h-5 rounded-md bg-surface-container-lowest ring-2 ring-outline-variant hover:ring-primary flex items-center justify-center transition-all" onclick="toggleItem(this)">
+<span class="material-symbols-outlined text-[16px] text-white opacity-0 transition-opacity">check</span>
+</button>
+<span class="font-title-md text-title-md text-on-surface group-hover:text-primary transition-colors">بيض مائدة طازج</span>
+<span class="px-2 py-0.5 rounded-full bg-surface-container-high text-secondary font-label-sm text-label-sm">طبق 30 بيضة</span>
+</div>
+<div class="flex items-center gap-space-md">
+<div class="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-surface-container-low text-on-surface">
+<span class="w-4 h-4 rounded-full bg-secondary-container text-on-secondary-container font-label-sm text-[10px] flex items-center justify-center font-semibold">أ</span>
+<span class="font-label-sm text-label-sm text-secondary">أمي</span>
+</div>
+<div class="opacity-0 group-hover:opacity-100 flex items-center gap-0.5 transition-opacity">
+<button class="p-1 rounded text-secondary hover:text-on-surface hover:bg-surface-container"><span class="material-symbols-outlined text-[18px]">edit</span></button>
+<button class="p-1 rounded text-secondary hover:text-error hover:bg-error-container/40"><span class="material-symbols-outlined text-[18px]">delete</span></button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- CATEGORY 3: مخبوزات -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden transition-all">
+<div class="flex items-center justify-between px-space-md py-space-sm bg-surface-container-low/60 cursor-pointer select-none">
+<div class="flex items-center gap-space-sm">
+<span class="w-7 h-7 rounded-lg bg-amber-50 text-amber-700 flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">bakery_dining</span>
+</span>
+<h2 class="font-title-md text-title-md text-on-surface">مخبوزات</h2>
+<span class="w-5 h-5 rounded-full bg-surface-container-high text-secondary flex items-center justify-center font-label-sm text-label-sm">1</span>
+</div>
+<button class="text-secondary hover:text-on-surface p-1">
+<span class="material-symbols-outlined text-[20px]">expand_more</span>
+</button>
+</div>
+<div class="divide-y divide-surface-container-low">
+<div class="group flex items-center justify-between h-14 px-space-md hover:bg-surface-container-low/40 transition-colors">
+<div class="flex items-center gap-space-md flex-1">
+<button class="w-5 h-5 rounded-md bg-surface-container-lowest ring-2 ring-outline-variant hover:ring-primary flex items-center justify-center transition-all" onclick="toggleItem(this)">
+<span class="material-symbols-outlined text-[16px] text-white opacity-0 transition-opacity">check</span>
+</button>
+<span class="font-title-md text-title-md text-on-surface group-hover:text-primary transition-colors">خبز مشروح ساخن</span>
+<span class="px-2 py-0.5 rounded-full bg-surface-container-high text-secondary font-label-sm text-label-sm">ربطتين</span>
+</div>
+<div class="flex items-center gap-space-md">
+<div class="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-surface-container-low text-on-surface">
+<span class="w-4 h-4 rounded-full bg-primary-fixed text-on-primary-fixed font-label-sm text-[10px] flex items-center justify-center font-semibold">ب</span>
+<span class="font-label-sm text-label-sm text-secondary">أبو أحمد</span>
+</div>
+<div class="opacity-0 group-hover:opacity-100 flex items-center gap-0.5 transition-opacity">
+<button class="p-1 rounded text-secondary hover:text-on-surface hover:bg-surface-container"><span class="material-symbols-outlined text-[18px]">edit</span></button>
+<button class="p-1 rounded text-secondary hover:text-error hover:bg-error-container/40"><span class="material-symbols-outlined text-[18px]">delete</span></button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- CATEGORY 4: منظفات وعناية -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden transition-all">
+<div class="flex items-center justify-between px-space-md py-space-sm bg-surface-container-low/60 cursor-pointer select-none">
+<div class="flex items-center gap-space-sm">
+<span class="w-7 h-7 rounded-lg bg-teal-50 text-teal-700 flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">cleaning_services</span>
+</span>
+<h2 class="font-title-md text-title-md text-on-surface">منظفات وعناية</h2>
+<span class="w-5 h-5 rounded-full bg-surface-container-high text-secondary flex items-center justify-center font-label-sm text-label-sm">1</span>
+</div>
+<button class="text-secondary hover:text-on-surface p-1">
+<span class="material-symbols-outlined text-[20px]">expand_more</span>
+</button>
+</div>
+<div class="divide-y divide-surface-container-low">
+<div class="group flex items-center justify-between h-14 px-space-md hover:bg-surface-container-low/40 transition-colors">
+<div class="flex items-center gap-space-md flex-1">
+<button class="w-5 h-5 rounded-md bg-surface-container-lowest ring-2 ring-outline-variant hover:ring-primary flex items-center justify-center transition-all" onclick="toggleItem(this)">
+<span class="material-symbols-outlined text-[16px] text-white opacity-0 transition-opacity">check</span>
+</button>
+<span class="font-title-md text-title-md text-on-surface group-hover:text-primary transition-colors">شامبو للشعر الجاف</span>
+<span class="px-2 py-0.5 rounded-full bg-surface-container-high text-secondary font-label-sm text-label-sm">علبة واحدة</span>
+</div>
+<div class="flex items-center gap-space-md">
+<div class="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-surface-container-low text-on-surface">
+<span class="w-4 h-4 rounded-full bg-tertiary-fixed text-on-tertiary-fixed font-label-sm text-[10px] flex items-center justify-center font-semibold">س</span>
+<span class="font-label-sm text-label-sm text-secondary">سارة</span>
+</div>
+<div class="opacity-0 group-hover:opacity-100 flex items-center gap-0.5 transition-opacity">
+<button class="p-1 rounded text-secondary hover:text-on-surface hover:bg-surface-container"><span class="material-symbols-outlined text-[18px]">edit</span></button>
+<button class="p-1 rounded text-secondary hover:text-error hover:bg-error-container/40"><span class="material-symbols-outlined text-[18px]">delete</span></button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Completed Items Section (Subtle Strikethrough & Dimmed) -->
+<div class="mt-space-sm bg-surface-container-low/50 rounded-xl p-space-md transition-all">
+<div class="flex items-center justify-between cursor-pointer select-none">
+<div class="flex items-center gap-space-sm text-secondary">
+<span class="material-symbols-outlined text-[20px]">task_alt</span>
+<span class="font-title-sm text-title-sm">تم شراؤه حديثاً (4)</span>
+</div>
+<button class="text-secondary hover:text-on-surface p-1">
+<span class="material-symbols-outlined text-[20px]">expand_more</span>
+</button>
+</div>
+<div class="mt-space-sm space-y-1">
+<div class="flex items-center justify-between py-2 px-space-xs text-secondary/70">
+<div class="flex items-center gap-space-md">
+<span class="w-5 h-5 rounded-md bg-primary text-white flex items-center justify-center text-[14px]">
+<span class="material-symbols-outlined text-[16px]">check</span>
+</span>
+<span class="line-through font-body-md text-body-md">سكر أبيض ناعم 5 كغ</span>
+</div>
+<span class="font-label-sm text-label-sm">تم بواسطة أبو أحمد</span>
+</div>
+<div class="flex items-center justify-between py-2 px-space-xs text-secondary/70">
+<div class="flex items-center gap-space-md">
+<span class="w-5 h-5 rounded-md bg-primary text-white flex items-center justify-center text-[14px]">
+<span class="material-symbols-outlined text-[16px]">check</span>
+</span>
+<span class="line-through font-body-md text-body-md">زيت زيتون بكر ممتاز</span>
+</div>
+<span class="font-label-sm text-label-sm">تم بواسطة أمي</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Left Panel (Sidebar Tools: WhatsApp Parsing + Recent Purchases + Market Banner) -->
+<aside class="lg:col-span-4 flex flex-col gap-space-md order-2">
+<!-- WhatsApp AI Parsing Card -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm p-space-md flex flex-col gap-space-sm relative overflow-hidden">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="w-7 h-7 rounded-lg bg-[#25D366]/10 text-[#25D366] flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">chat</span>
+</div>
+<h3 class="font-title-md text-title-md text-on-surface">الصق رسائل الواتساب</h3>
+</div>
+<span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-primary-fixed text-on-primary-fixed font-label-sm text-label-sm font-semibold">
+<span class="material-symbols-outlined text-[14px]">auto_awesome</span>
+<span>ذكي</span>
+</span>
+</div>
+<p class="font-body-sm text-body-sm text-secondary leading-relaxed">
+            انسخ أي محادثة أو فويس نوت مكتوب من جروب العائلة، وسيقوم المساعد الذكي باستخراج الطلبات بدقة.
+          </p>
+<textarea class="w-full p-space-sm rounded-lg bg-surface-container-low text-on-surface font-body-sm text-body-sm placeholder:text-outline outline-none resize-none focus:bg-surface-container-lowest focus:ring-1 focus:ring-primary transition-all" placeholder="مثال: يونس جيب معك خبز ولبن وأمي بدها بندورة وموز ضروري..." rows="3"></textarea>
+<div class="flex items-center justify-between pt-1">
+<div class="flex items-center gap-1 text-outline font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[15px]">lock</span>
+<span>خصوصية كاملة ومحمية</span>
+</div>
+<button class="flex items-center gap-1.5 px-space-md py-2 rounded-lg bg-primary-container text-on-primary font-title-sm text-title-sm hover:opacity-90 active:scale-95 shadow-sm transition-all">
+<span class="material-symbols-outlined text-[16px]">bolt</span>
+<span>حوّل إلى قائمة</span>
+</button>
+</div>
+</div>
+<!-- Recently Bought Ledger Card -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm p-space-md flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<h3 class="font-title-md text-title-md text-on-surface">آخر ما انشرى</h3>
+<span class="font-label-sm text-label-sm text-secondary">اليوم</span>
+</div>
+<div class="space-y-space-sm mt-1">
+<div class="flex items-center justify-between p-2 rounded-lg bg-surface-container-low/60">
+<div class="flex items-center gap-2">
+<span class="w-6 h-6 rounded-full bg-primary-fixed-dim text-on-primary-fixed-variant font-label-sm text-[11px] flex items-center justify-center font-bold">ي</span>
+<div class="flex flex-col">
+<span class="font-title-sm text-title-sm text-on-surface">لبن رائب</span>
+<span class="font-label-sm text-label-sm text-secondary">اشترى يونس</span>
+</div>
+</div>
+<span class="font-label-sm text-label-sm text-outline">قبل ساعتين</span>
+</div>
+<div class="flex items-center justify-between p-2 rounded-lg bg-surface-container-low/60">
+<div class="flex items-center gap-2">
+<span class="w-6 h-6 rounded-full bg-primary-fixed text-on-primary-fixed font-label-sm text-[11px] flex items-center justify-center font-bold">ب</span>
+<div class="flex flex-col">
+<span class="font-title-sm text-title-sm text-on-surface">بيض بلدي</span>
+<span class="font-label-sm text-label-sm text-secondary">اشترى أبو أحمد</span>
+</div>
+</div>
+<span class="font-label-sm text-label-sm text-outline">قبل 4 ساعات</span>
+</div>
+<div class="flex items-center justify-between p-2 rounded-lg bg-surface-container-low/60">
+<div class="flex items-center gap-2">
+<span class="w-6 h-6 rounded-full bg-tertiary-fixed text-on-tertiary-fixed font-label-sm text-[11px] flex items-center justify-center font-bold">س</span>
+<div class="flex flex-col">
+<span class="font-title-sm text-title-sm text-on-surface">مناديل مطبخ</span>
+<span class="font-label-sm text-label-sm text-secondary">اشترت سارة</span>
+</div>
+</div>
+<span class="font-label-sm text-label-sm text-outline">أمس</span>
+</div>
+</div>
+</div>
+<!-- Fast Shortcut to Market Mode Banner -->
+<div class="relative bg-gradient-to-br from-primary-container to-surface-tint rounded-xl p-space-md text-on-primary shadow-md overflow-hidden">
+<div class="relative z-10 flex flex-col gap-space-xs">
+<div class="inline-flex items-center gap-1 text-on-primary-container font-label-sm text-label-sm uppercase tracking-wider">
+<span class="material-symbols-outlined text-[16px]">directions_run</span>
+<span>أنت الآن في السوبرماركت؟</span>
+</div>
+<h4 class="font-title-md text-title-md text-on-primary font-bold">شغّل "وضع السوق" المخصص للموبايل</h4>
+<p class="font-body-sm text-body-sm text-on-primary/80">أزرار ضخمة، فرز حسب ممرات المتجر، وإلغاء فوري بلمسة واحدة أثناء التسوق.</p>
+<button class="mt-space-sm inline-flex items-center justify-center gap-2 px-space-md py-2 rounded-lg bg-surface-container-lowest text-primary font-title-sm text-title-sm hover:bg-surface-bright shadow-sm transition-all w-fit">
+<span class="material-symbols-outlined text-[18px]">shopping_cart_checkout</span>
+<span>بدء جولة التسوق</span>
+</button>
+</div>
+<!-- Abstract Background Shape -->
+<div class="absolute -left-6 -bottom-6 w-32 h-32 bg-white/10 rounded-full blur-xl pointer-events-none"></div>
+</div>
+</aside>
+</div>
+</div>
+<!-- Bottom Floating Toast Notification (Market Feedback) -->
+<div class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 bg-inverse-surface text-inverse-on-surface px-space-md py-space-sm rounded-xl shadow-xl flex items-center gap-space-md transition-all duration-300" id="undo-toast">
+<div class="flex items-center gap-2">
+<span class="w-5 h-5 rounded-full bg-primary flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined text-[14px]">check</span>
+</span>
+<span class="font-body-md text-body-md">تم شراؤه: <span class="font-semibold text-white">لبن زبادي كامل الدسم</span></span>
+</div>
+<div class="flex items-center gap-2">
+<button class="px-2.5 py-1 rounded bg-white/10 hover:bg-white/20 text-inverse-primary font-title-sm text-title-sm transition-colors" onclick="dismissToast()">
+        تراجع
+      </button>
+<button class="text-secondary-fixed-dim hover:text-white p-0.5" onclick="dismissToast()">
+<span class="material-symbols-outlined text-[18px]">close</span>
+</button>
+</div>
+</div>
+<script>
+    function toggleItem(btn) {
+      const isChecked = btn.classList.contains('bg-primary');
+      const icon = btn.querySelector('.material-symbols-outlined');
+      const textSpan = btn.parentElement.querySelector('span.font-title-md');
+      const toast = document.getElementById('undo-toast');
+
+      if (!isChecked) {
+        btn.classList.remove('bg-surface-container-lowest', 'ring-2');
+        btn.classList.add('bg-primary');
+        icon.classList.remove('opacity-0');
+        icon.classList.add('opacity-100');
+        if (textSpan) {
+          textSpan.classList.add('line-through', 'text-outline');
+        }
+        if (toast) {
+          toast.classList.remove('opacity-0', 'pointer-events-none', 'translate-y-4');
+        }
+      } else {
+        btn.classList.add('bg-surface-container-lowest', 'ring-2');
+        btn.classList.remove('bg-primary');
+        icon.classList.add('opacity-0');
+        icon.classList.remove('opacity-100');
+        if (textSpan) {
+          textSpan.classList.remove('line-through', 'text-outline');
+        }
+      }
+    }
+
+    function dismissToast() {
+      const toast = document.getElementById('undo-toast');
+      if (toast) {
+        toast.classList.add('opacity-0', 'pointer-events-none', 'translate-y-4');
+      }
+    }
+  </script>
+</div></main></div></body></html>
