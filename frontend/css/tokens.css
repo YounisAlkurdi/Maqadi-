@@ -1,0 +1,61 @@
+:root {
+  /* Colors */
+  --color-primary: #1F8A5B;
+  --color-primary-dark: #166A45;
+  --color-primary-tint: #E8F4EE;
+  --color-bg: #F6F8F7;
+  --color-surface: #FFFFFF;
+  --color-border: #E3E8E5;
+  --color-text: #1B2420;
+  --color-text-muted: #5F6C66;
+  --color-urgent: #D64545;
+  --color-urgent-tint: #FDECEC;
+  --color-warning: #F2B544;
+  --color-warning-tint: #FEF6E6;
+  --color-white: #FFFFFF;
+  --color-backdrop: rgba(27, 36, 32, 0.45);
+
+  /* Member palette */
+  --member-teal: #2A7F85;
+  --member-plum: #7A4A7D;
+  --member-rust: #B5622F;
+  --member-indigo: #4A5AA8;
+  --member-moss: #6E8B3D;
+  --member-rose: #B84A6B;
+
+  /* Typography */
+  --font-sans: "IBM Plex Sans Arabic", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --text-title-lg: 1.75rem;   /* 28px */
+  --text-title-md: 1.5rem;    /* 24px */
+  --text-section: 1.25rem;    /* 20px */
+  --text-item: 1.0625rem;     /* 17px */
+  --text-body: 1rem;          /* 16px */
+  --text-secondary: 0.875rem; /* 14px */
+
+  /* Spacing (8px grid) */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+
+  /* Radii */
+  --radius-card: 12px;
+  --radius-control: 10px;
+  --radius-pill: 999px;
+
+  /* Shadows */
+  --shadow-card: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-dialog: 0 12px 32px rgba(27, 36, 32, 0.16);
+
+  /* Layout & Breakpoints */
+  --bp-tablet: 768px;
+  --bp-desktop: 1200px;
+  --sidebar-width: 248px;
+  --rail-width: 72px;
+  --sidepanel-width: 340px;
+  --main-max-width: 760px;
+  --tap-min: 44px;
+}

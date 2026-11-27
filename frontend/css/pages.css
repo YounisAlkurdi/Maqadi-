@@ -1,0 +1,344 @@
+/* App Shell (list, shop, history, household) */
+.app-shell {
+  display: flex;
+  min-height: 100dvh;
+}
+
+.sidebar {
+  width: var(--sidebar-width);
+  flex-shrink: 0;
+  background-color: var(--color-surface);
+  border-inline-end: 1px solid var(--color-border);
+  padding: var(--space-5) var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.brand-wordmark {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-section);
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.brand-icon {
+  width: 24px;
+  height: 24px;
+  color: var(--color-primary);
+  flex-shrink: 0;
+}
+
+.household-badge {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  background-color: var(--color-bg);
+  border-radius: var(--radius-control);
+  font-size: var(--text-secondary);
+  font-weight: 500;
+}
+
+.nav-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-height: var(--tap-min);
+  padding-inline: var(--space-3);
+  border-radius: var(--radius-control);
+  color: var(--color-text-muted);
+  font-weight: 500;
+  position: relative;
+}
+
+.nav-link:hover {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+}
+
+.nav-link[aria-current="page"] {
+  background-color: var(--color-primary-tint);
+  color: var(--color-primary-dark);
+  font-weight: 600;
+}
+
+.nav-link[aria-current="page"]::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: 0;
+  inset-block: 8px;
+  width: 3px;
+  border-radius: var(--radius-pill);
+  background-color: var(--color-primary);
+}
+
+.invite-mini-card {
+  margin-block-start: auto;
+  padding: var(--space-3);
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.invite-mini-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+}
+
+.invite-code-text {
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  direction: ltr;
+}
+
+.app-main {
+  flex: 1;
+  min-width: 0;
+  padding: var(--space-6);
+  display: flex;
+  justify-content: center;
+  gap: var(--space-6);
+}
+
+.main-column {
+  width: 100%;
+  max-width: var(--main-max-width);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.page-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.page-title {
+  font-size: var(--text-title-lg);
+  font-weight: 600;
+}
+
+.page-subtitle {
+  font-size: var(--text-secondary);
+  color: var(--color-text-muted);
+}
+
+.side-panel {
+  width: var(--sidepanel-width);
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.bottom-tab-bar {
+  display: none;
+}
+
+/* Tablet (768px - 1199px): 72px icon rail */
+@media (max-width: 1199px) {
+  .sidebar {
+    width: var(--rail-width);
+    padding-inline: var(--space-2);
+    align-items: center;
+  }
+
+  .sidebar .brand-label,
+  .sidebar .household-badge,
+  .sidebar .nav-label,
+  .sidebar .invite-mini-card {
+    display: none;
+  }
+
+  .nav-link {
+    justify-content: center;
+    padding-inline: var(--space-2);
+    width: 48px;
+  }
+
+  .side-panel {
+    display: none;
+  }
+}
+
+/* Phone (< 768px): bottom tab bar */
+@media (max-width: 767px) {
+  .sidebar {
+    display: none;
+  }
+
+  .app-main {
+    padding: var(--space-4);
+    padding-block-end: 88px;
+  }
+
+  .page-title {
+    font-size: var(--text-title-md);
+  }
+
+  .bottom-tab-bar {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    position: fixed;
+    inset-block-end: 0;
+    inset-inline: 0;
+    z-index: 40;
+    background-color: var(--color-surface);
+    border-top: 1px solid var(--color-border);
+    padding-block: var(--space-1);
+  }
+
+  .tab-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 52px;
+    gap: 2px;
+    font-size: var(--text-secondary);
+    color: var(--color-text-muted);
+  }
+
+  .tab-link[aria-current="page"] {
+    color: var(--color-primary);
+    font-weight: 600;
+  }
+}
+
+/* Screen A: Join / Create Household */
+.auth-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 100dvh;
+}
+
+.auth-form-pane {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-6);
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 440px;
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.color-picker {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.color-dot {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-pill);
+  border: 2px solid transparent;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-white);
+}
+
+.color-dot[aria-checked="true"] {
+  border-color: var(--color-text);
+  box-shadow: 0 0 0 2px var(--color-surface) inset;
+}
+
+.auth-note {
+  font-size: var(--text-secondary);
+  color: var(--color-text-muted);
+  text-align: center;
+}
+
+.auth-brand-pane {
+  background-color: var(--color-primary-tint);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-8);
+}
+
+.auth-brand-inner {
+  max-width: 440px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.auth-brand-title {
+  font-size: var(--text-title-lg);
+  font-weight: 600;
+}
+
+.auth-points {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.auth-point {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  font-size: var(--text-body);
+}
+
+.auth-point-icon {
+  color: var(--color-primary);
+  flex-shrink: 0;
+  margin-block-start: 2px;
+}
+
+@media (max-width: 1199px) {
+  .auth-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .auth-card {
+    max-width: 480px;
+  }
+
+  .auth-brand-pane {
+    padding: var(--space-6);
+  }
+}
+
+@media (max-width: 767px) {
+  .auth-form-pane {
+    padding: var(--space-4);
+    align-items: flex-start;
+  }
+
+  .auth-brand-pane {
+    display: none;
+  }
+}
