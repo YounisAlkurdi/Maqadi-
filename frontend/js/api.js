@@ -115,3 +115,19 @@ export async function updateItem(itemId, body) {
   });
   return res.data;
 }
+
+export async function previewPaste(text) {
+  const res = await apiRequest("/paste/preview", {
+    method: "POST",
+    body: JSON.stringify({ text }),
+  });
+  return res.data;
+}
+
+export async function confirmPaste(items) {
+  const res = await apiRequest("/paste/confirm", {
+    method: "POST",
+    body: JSON.stringify({ items }),
+  });
+  return res.data;
+}
