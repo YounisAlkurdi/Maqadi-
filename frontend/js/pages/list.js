@@ -50,7 +50,7 @@ initVoiceInput({
   btn: voiceBtn,
   statusEl: voiceStatusEl,
   onTranscript: async (transcript) => {
-    openPasteModal();
+    openPasteModal("voice");
     pasteTextarea.value = transcript;
     pasteError.hidden = true;
     pasteExtractBtn.disabled = true;
@@ -452,8 +452,10 @@ init();
 // --- WhatsApp Paste Modal ---
 const pasteOpenBtn = document.getElementById("paste-open-btn");
 const pasteBackdrop = document.getElementById("paste-dialog-backdrop");
+const pasteDialogTitle = document.getElementById("paste-dialog-title");
 const pasteCloseBtn = document.getElementById("paste-dialog-close");
 const pasteCancelBtn = document.getElementById("paste-cancel-btn");
+const pasteTextareaLabel = document.getElementById("paste-textarea-label");
 const pasteTextarea = document.getElementById("paste-textarea");
 const pasteError = document.getElementById("paste-error");
 const pasteExtractBtn = document.getElementById("paste-extract-btn");
@@ -463,7 +465,12 @@ const pastePreviewList = document.getElementById("paste-preview-list");
 const pastePreviewCount = document.getElementById("paste-preview-count");
 const pasteEngineBadge = document.getElementById("paste-engine-badge");
 
-function openPasteModal() {
+function openPasteModal(source = "paste") {
+  const isVoice = source === "voice";
+  pasteDialogTitle.textContent = isVoice ? "استخراج الطلبات من الصوت" : "لصق رسائل الواتساب";
+  pasteTextareaLabel.textContent = isVoice
+    ? "النص المسموع (لا يتم حفظ التسجيل)"
+    : "الصق الرسائل هنا (لا يتم حفظ النص الأصلي)";
   state.pastePreviewItems = [];
   pasteTextarea.value = "";
   pasteError.hidden = true;
@@ -553,7 +560,7 @@ function renderPastePreview(data) {
   pasteConfirmBtn.disabled = false;
 }
 
-pasteOpenBtn.addEventListener("click", openPasteModal);
+pasteOpenBtn.addEventListener("click", () => openPasteModal("paste"));
 pasteCloseBtn.addEventListener("click", closePasteModal);
 pasteCancelBtn.addEventListener("click", closePasteModal);
 pasteBackdrop.addEventListener("click", (e) => {
