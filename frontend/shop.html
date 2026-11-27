@@ -17,14 +17,31 @@
     <aside id="app-sidebar" class="sidebar"></aside>
     <main class="app-main">
       <div class="main-column">
-        <header class="page-header">
-          <h1 class="page-title">وضع السوق</h1>
-          <p class="page-subtitle">قريباً في المرحلة F9.</p>
+        <header class="page-header page-header-row">
+          <div>
+            <h1 class="page-title">وضع السوق</h1>
+            <p id="shop-subtitle" class="page-subtitle">جاري التحميل…</p>
+          </div>
+          <a href="list.html" class="btn btn-secondary">العودة للقائمة</a>
         </header>
+
+        <section id="shop-progress-card" class="card shop-progress-card" hidden>
+          <div class="shop-progress-header">
+            <span id="shop-progress-text" class="field-label">0 من 0</span>
+            <span id="shop-progress-pct" class="badge-muted">0%</span>
+          </div>
+          <div class="shop-progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+            <div id="shop-progress-fill" class="shop-progress-fill"></div>
+          </div>
+        </section>
+
+        <div id="shop-error" class="alert-error" role="alert" hidden></div>
+        <div id="shop-content" class="main-column"></div>
       </div>
     </main>
     <nav id="app-tabbar" class="bottom-tab-bar" aria-label="التنقل السفلي"></nav>
   </div>
+  <div id="toast-root"></div>
   <script type="module" src="js/pages/shop.js"></script>
 </body>
 </html>
