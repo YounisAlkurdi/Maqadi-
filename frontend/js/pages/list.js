@@ -578,3 +578,58 @@ pasteConfirmBtn.addEventListener("click", async () => {
     pasteConfirmBtn.textContent = "أضف المحدد";
   }
 });
+
+// --- WhatsApp Share ---
+const shareListBtn = document.getElementById("share-list-btn");
+
+function formatShareText(items) {
+  const openItems = items.filter((i) => i.status === "open");
+  if (openItems.length === 0) return "";
+
+  const grouped = new Map();
+  for (const cat of CATEGORY_ORDER) {
+    grouped.set(cat, []);
+  }
+  for (const item of openItems) {
+    const cat = grouped.has(item.category) ? item.category : "other";
+    grouped.get(cat).push(item);
+  }
+
+  const lines = ["طلبات البيت:"];
+  for (const cat of CATEGORY_ORDER) {
+    const groupItems = grouped.get(cat);
+    if (!groupItems || groupItems.length === 0) continue;
+    const label = (CATEGORY_META[cat] || CATEGORY_META.other).label;
+    lines.push(`\n*${label}*`);
+    for (const item of groupItems) {
+      const qty = item.quantity_text ? ` (${item.quantity_text})` : "";
+      const urgent = item.urgency === "urgent" ? " [مستعجل]" : "";
+      lines.push(`- ${item.name}${qty}${urgent}`);
+    }
+  }
+  return lines.join("\n");
+}
+
+shareListBtn.addEventListener("click", async () => {
+  const text = formatShareText(state.items);
+  if (!text) {
+    showToast("القائمة فاضية حالياً");
+    return;
+  }
+
+  if (navigator.share) {
+    try {
+      await navigator.share({ title: "طلبات البيت", text });
+      return;
+    } catch (err) {
+      if (err && err.name === "AbortError") return;
+    }
+  }
+
+  try {
+    await navigator.clipboard.writeText(text);
+    showToast("تم نسخ القائمة للمشاركة");
+  } catch {
+    window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, "_blank", "noopener,noreferrer");
+  }
+});
