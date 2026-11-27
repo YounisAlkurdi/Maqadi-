@@ -13,12 +13,12 @@ export function isVoiceSupported() {
 }
 
 /**
- * Wire voice input to a <textarea>.
- * @param {{ textarea: HTMLTextAreaElement, btn: HTMLButtonElement,
- *            btnLabel: HTMLElement, statusEl: HTMLElement }} opts
+ * Wire voice input to a field or callback.
+ * @param {{ textarea?: HTMLTextAreaElement|HTMLInputElement, btn: HTMLButtonElement,
+ *            statusEl: HTMLElement, onTranscript?: (text: string) => Promise<void>|void }} opts
  */
-export function initVoiceInput({ textarea, btn, statusEl }) {
-  if (!btn || !textarea) return;
+export function initVoiceInput({ textarea, btn, statusEl, onTranscript }) {
+  if (!btn || (!textarea && !onTranscript)) return;
 
   if (!isVoiceSupported()) {
     btn.addEventListener("click", () => {
@@ -31,11 +31,12 @@ export function initVoiceInput({ textarea, btn, statusEl }) {
   const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
   const recognition = new SR();
   recognition.lang = "ar-SA";
-  recognition.continuous = false;
+  recognition.continuous = true;
   recognition.interimResults = true;
 
   let listening = false;
   let finalText = "";
+  let latestInterim = "";
 
   function setListening(active) {
     listening = active;
@@ -43,32 +44,49 @@ export function initVoiceInput({ textarea, btn, statusEl }) {
     btn.setAttribute("aria-label", active ? "إيقاف الإدخال الصوتي" : "إدخال صوتي");
     btn.classList.toggle("voice-btn--active", active);
     statusEl.hidden = !active;
-    if (active) statusEl.textContent = "جاري الاستماع…";
+    if (active) statusEl.textContent = "جاري الاستماع… اضغط المايك للإيقاف";
   }
 
   recognition.addEventListener("start", () => setListening(true));
 
   recognition.addEventListener("result", (e) => {
+    let f = "";
     let interim = "";
-    finalText = "";
     for (const res of e.results) {
+      const t = res[0].transcript;
       if (res.isFinal) {
-        finalText += res[0].transcript;
+        f += (f ? " " : "") + t.trim();
       } else {
-        interim += res[0].transcript;
+        interim += (interim ? " " : "") + t.trim();
       }
     }
-    statusEl.textContent = interim || "جاري الاستماع…";
+    finalText = f;
+    latestInterim = interim;
+    const combined = [finalText, latestInterim].filter(Boolean).join(" ");
+    statusEl.textContent = combined || "جاري الاستماع… اضغط المايك للإيقاف";
   });
 
-  recognition.addEventListener("end", () => {
+  recognition.addEventListener("end", async () => {
+    const wasListening = listening;
     setListening(false);
-    statusEl.hidden = true;
-    if (finalText.trim()) {
+    const spoken = [finalText, latestInterim].filter(Boolean).join(" ").trim();
+    finalText = "";
+    latestInterim = "";
+    if (!wasListening) return;
+
+    if (!spoken) {
+      statusEl.hidden = false;
+      statusEl.textContent = "لم يُكتشف أي كلام، حاول مرة أخرى.";
+      return;
+    }
+
+    if (onTranscript) {
+      await onTranscript(spoken);
+    } else if (textarea) {
       const sep = textarea.value.trim()
         ? textarea.tagName === "TEXTAREA" ? "\n" : " "
         : "";
-      textarea.value = textarea.value.trimEnd() + sep + finalText.trim();
+      textarea.value = textarea.value.trimEnd() + sep + spoken;
       textarea.dispatchEvent(new Event("input", { bubbles: true }));
       textarea.focus();
     }
@@ -90,6 +108,7 @@ export function initVoiceInput({ textarea, btn, statusEl }) {
       recognition.stop();
     } else {
       finalText = "";
+      latestInterim = "";
       recognition.start();
     }
   });

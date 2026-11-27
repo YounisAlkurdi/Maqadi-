@@ -45,7 +45,28 @@ const fabAdd = document.getElementById("fab-add");
 // Voice input wiring (next to Quick-Add)
 const voiceBtn = document.getElementById("voice-btn");
 const voiceStatusEl = document.getElementById("voice-status");
-initVoiceInput({ textarea: quickName, btn: voiceBtn, statusEl: voiceStatusEl });
+initVoiceInput({
+  textarea: quickName,
+  btn: voiceBtn,
+  statusEl: voiceStatusEl,
+  onTranscript: async (transcript) => {
+    openPasteModal();
+    pasteTextarea.value = transcript;
+    pasteError.hidden = true;
+    pasteExtractBtn.disabled = true;
+    pasteExtractBtn.textContent = "جاري الاستخراج…";
+    try {
+      const data = await previewPaste(transcript);
+      renderPastePreview(data);
+    } catch (err) {
+      pasteError.textContent = err.message || "تعذر استخراج الأغراض";
+      pasteError.hidden = false;
+    } finally {
+      pasteExtractBtn.disabled = false;
+      pasteExtractBtn.textContent = "استخرج الأغراض";
+    }
+  },
+});
 
 // Edit dialog elements
 const editBackdrop = document.getElementById("edit-dialog-backdrop");
