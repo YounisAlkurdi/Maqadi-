@@ -17,7 +17,7 @@ export function isVoiceSupported() {
  * @param {{ textarea: HTMLTextAreaElement, btn: HTMLButtonElement,
  *            btnLabel: HTMLElement, statusEl: HTMLElement }} opts
  */
-export function initVoiceInput({ textarea, btn, btnLabel, statusEl }) {
+export function initVoiceInput({ textarea, btn, statusEl }) {
   if (!btn || !textarea) return;
 
   if (!isVoiceSupported()) {
@@ -40,10 +40,10 @@ export function initVoiceInput({ textarea, btn, btnLabel, statusEl }) {
   function setListening(active) {
     listening = active;
     btn.setAttribute("aria-pressed", String(active));
+    btn.setAttribute("aria-label", active ? "إيقاف الإدخال الصوتي" : "إدخال صوتي");
     btn.classList.toggle("voice-btn--active", active);
-    btnLabel.textContent = active ? "جاري…" : "صوت";
     statusEl.hidden = !active;
-    if (active) statusEl.textContent = "🎙 تكلم الآن…";
+    if (active) statusEl.textContent = "جاري الاستماع…";
   }
 
   recognition.addEventListener("start", () => setListening(true));
@@ -58,7 +58,7 @@ export function initVoiceInput({ textarea, btn, btnLabel, statusEl }) {
         interim += res[0].transcript;
       }
     }
-    statusEl.textContent = interim ? `🎙 ${interim}` : "🎙 تكلم الآن…";
+    statusEl.textContent = interim || "جاري الاستماع…";
   });
 
   recognition.addEventListener("end", () => {

@@ -44,9 +44,8 @@ const fabAdd = document.getElementById("fab-add");
 
 // Voice input wiring (next to Quick-Add)
 const voiceBtn = document.getElementById("voice-btn");
-const voiceBtnLabel = document.getElementById("voice-btn-label");
 const voiceStatusEl = document.getElementById("voice-status");
-initVoiceInput({ textarea: quickName, btn: voiceBtn, btnLabel: voiceBtnLabel, statusEl: voiceStatusEl });
+initVoiceInput({ textarea: quickName, btn: voiceBtn, statusEl: voiceStatusEl });
 
 // Edit dialog elements
 const editBackdrop = document.getElementById("edit-dialog-backdrop");
