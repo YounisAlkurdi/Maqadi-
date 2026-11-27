@@ -3,11 +3,97 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>طلبات البيت</title>
+  <title>طلبات البيت — دخول</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/pages.css">
 </head>
 <body>
-  <main>
-    <h1>طلبات البيت</h1>
+  <main class="auth-layout">
+    <section class="auth-form-pane" aria-label="الدخول أو إنشاء بيت">
+      <div class="card auth-card">
+        <div class="brand-wordmark">
+          <svg class="brand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M9 11l3 3L22 4M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
+          </svg>
+          <span>طلبات البيت</span>
+        </div>
+
+        <div class="segmented" role="tablist" aria-label="طريقة الدخول">
+          <button type="button" id="tab-create" class="segmented-btn" role="tab" aria-selected="false">
+            أنشئ بيت جديد
+          </button>
+          <button type="button" id="tab-join" class="segmented-btn" role="tab" aria-selected="true">
+            عندي كود البيت
+          </button>
+        </div>
+
+        <form id="auth-form" class="auth-form" novalidate>
+          <div id="field-household-name" class="field" hidden>
+            <label for="input-household-name" class="field-label">اسم البيت</label>
+            <input id="input-household-name" class="input" type="text" maxlength="60" placeholder="مثلاً: بيت أبو أحمد">
+          </div>
+
+          <div id="field-invite-code" class="field">
+            <label for="input-invite-code" class="field-label">كود البيت</label>
+            <input id="input-invite-code" class="input input-code" type="text" maxlength="9" placeholder="K7M2-9QXP" autocomplete="off">
+          </div>
+
+          <div class="field">
+            <label for="input-display-name" class="field-label">اسمك</label>
+            <input id="input-display-name" class="input" type="text" maxlength="30" placeholder="مثلاً: يونس" required>
+          </div>
+
+          <div class="field">
+            <span class="field-label">اختر لونك</span>
+            <div id="color-picker" class="color-picker" role="radiogroup" aria-label="اختر لونك"></div>
+          </div>
+
+          <div id="auth-error" class="alert-error" role="alert" hidden></div>
+
+          <button id="submit-btn" type="submit" class="btn btn-primary btn-full">ادخل</button>
+        </form>
+
+        <p class="auth-note">أي شخص معه الكود يقدر يدخل. ممكن تغيّر الكود من إعدادات البيت.</p>
+      </div>
+    </section>
+
+    <aside class="auth-brand-pane" aria-label="عن طلبات البيت">
+      <div class="auth-brand-inner">
+        <div class="brand-wordmark">
+          <svg class="brand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M9 11l3 3L22 4M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
+          </svg>
+          <span>طلبات البيت</span>
+        </div>
+        <h1 class="auth-brand-title">قائمة وحدة لكل البيت</h1>
+        <ul class="auth-points">
+          <li class="auth-point">
+            <svg class="auth-point-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+            </svg>
+            <span>الصق رسائل الواتساب وخلّي الذكاء الاصطناعي يرتبها</span>
+          </li>
+          <li class="auth-point">
+            <svg class="auth-point-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 7a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
+            </svg>
+            <span>كل العيلة تشوف نفس القائمة لحظياً</span>
+          </li>
+          <li class="auth-point">
+            <svg class="auth-point-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+            </svg>
+            <span>بدون تسجيل ولا باسورد</span>
+          </li>
+        </ul>
+      </div>
+    </aside>
   </main>
+  <script type="module" src="js/pages/index.js"></script>
 </body>
 </html>
