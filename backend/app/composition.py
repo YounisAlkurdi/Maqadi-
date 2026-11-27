@@ -12,6 +12,13 @@ from app.application.households import (
     JoinHousehold,
     RotateInviteCode,
 )
+from app.application.items import (
+    AddItem,
+    ArchiveBought,
+    ListItems,
+    SetStatus,
+    UpdateItem,
+)
 from app.config import Settings
 from app.infrastructure.clock import SystemClock
 from app.infrastructure.db import create_db_engine, create_session_factory, init_db
@@ -30,6 +37,11 @@ class AppContainer:
     join_household: JoinHousehold
     rotate_invite_code: RotateInviteCode
     get_me: GetMe
+    list_items: ListItems
+    add_item: AddItem
+    update_item: UpdateItem
+    set_status: SetStatus
+    archive_bought: ArchiveBought
 
 
 def build_container(settings: Settings) -> tuple[AppContainer, object]:
@@ -53,6 +65,11 @@ def build_container(settings: Settings) -> tuple[AppContainer, object]:
         join_household=JoinHousehold(household_repo, member_repo, rate_limiter, clock),
         rotate_invite_code=RotateInviteCode(household_repo),
         get_me=GetMe(member_repo),
+        list_items=ListItems(item_repo),
+        add_item=AddItem(item_repo, clock),
+        update_item=UpdateItem(item_repo, clock),
+        set_status=SetStatus(item_repo, clock),
+        archive_bought=ArchiveBought(item_repo, clock),
     )
     return container, engine
 
