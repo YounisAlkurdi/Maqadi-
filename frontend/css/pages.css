@@ -879,6 +879,11 @@
   color: var(--text);
 }
 
+.member-remove-btn {
+  margin-inline-start: auto;
+  color: var(--color-urgent);
+}
+
 /* --- History Page (F11) --- */
 .history-card {
   display: flex;

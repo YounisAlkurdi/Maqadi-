@@ -1,4 +1,4 @@
-import { clearToken, rotateInviteCode } from "../api.js";
+import { clearToken, removeMember, rotateInviteCode } from "../api.js";
 import { showToast } from "../components/toast.js";
 import { requireAuth } from "../guard.js";
 import { initShell } from "../shell.js";
@@ -13,8 +13,13 @@ const membersListEl = document.getElementById("members-list");
 const logoutBtn = document.getElementById("logout-btn");
 
 let currentInviteCode = "";
+let currentMembers = [];
+let currentActorId = "";
 
 function renderMembers(members, currentMemberId) {
+  currentMembers = members;
+  currentActorId = currentMemberId;
+  subtitleEl.textContent = `${members.length} أعضاء في البيت`;
   membersListEl.replaceChildren();
   for (const member of members) {
     const li = document.createElement("li");
@@ -36,6 +41,27 @@ function renderMembers(members, currentMemberId) {
       badge.className = "badge-muted";
       badge.textContent = "أنت";
       li.appendChild(badge);
+    } else {
+      const removeBtn = document.createElement("button");
+      removeBtn.type = "button";
+      removeBtn.className = "btn btn-text member-remove-btn";
+      removeBtn.textContent = "إزالة";
+      removeBtn.addEventListener("click", async () => {
+        if (!window.confirm(`إزالة "${member.display_name}" من البيت؟`)) return;
+        errorEl.hidden = true;
+        removeBtn.disabled = true;
+        try {
+          await removeMember(member.id);
+          const next = currentMembers.filter((m) => m.id !== member.id);
+          renderMembers(next, currentActorId);
+          showToast(`تمت إزالة ${member.display_name}`);
+        } catch (err) {
+          errorEl.textContent = err.message || "تعذر إزالة العضو";
+          errorEl.hidden = false;
+          removeBtn.disabled = false;
+        }
+      });
+      li.appendChild(removeBtn);
     }
 
     membersListEl.appendChild(li);

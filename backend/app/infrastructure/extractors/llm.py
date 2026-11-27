@@ -82,7 +82,10 @@ class LLMItemExtractor:
             ) as exc:
                 last_exc = exc
 
-        raise RuntimeError(f"LLM extraction failed after retry: {last_exc}") from last_exc
+        safe_msg = str(last_exc)
+        if self._api_key:
+            safe_msg = safe_msg.replace(self._api_key, "[REDACTED]")
+        raise RuntimeError(f"LLM extraction failed after retry: {safe_msg}") from None
 
     async def _call_provider(self, user_prompt: str) -> str:
         if self._http_client is not None:
@@ -116,7 +119,7 @@ class LLMItemExtractor:
             model = self._model or "gemini-2.0-flash"
             resp = await client.post(
                 f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent",
-                params={"key": self._api_key},
+                headers={"x-goog-api-key": self._api_key},
                 json={
                     "system_instruction": {"parts": [{"text": SYSTEM_PROMPT}]},
                     "contents": [{"parts": [{"text": user_prompt}]}],

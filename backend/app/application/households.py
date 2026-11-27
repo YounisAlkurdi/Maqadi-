@@ -8,6 +8,7 @@ from dataclasses import dataclass
 from app.domain.entities import Household, Member
 from app.domain.enums import MEMBER_COLORS
 from app.domain.errors import NotFoundError, ValidationError
+from app.domain.normalize import normalize_ar
 from app.domain.ports import Clock, EventBus, HouseholdRepo, MemberRepo, RateLimiter
 
 INVITE_CODE_ALPHABET = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"
@@ -179,6 +180,14 @@ class JoinHousehold:
         await self._rate_limiter.reset(ip_key)
         await self._rate_limiter.reset(code_key)
 
+        existing_members = await self._member_repo.list_by_household(household.id)
+        normalized_name = normalize_ar(clean_display_name)
+        if any(normalize_ar(m.display_name) == normalized_name for m in existing_members):
+            raise ValidationError(
+                "هذا الاسم مستخدم بالفعل في العائلة، اختر اسماً آخر أو أزل العضو القديم",
+                code="duplicate_member_name",
+            )
+
         raw_token = generate_token()
         now = self._clock.now()
         member = Member(
@@ -229,3 +238,22 @@ class GetMe:
     async def execute(self, *, member: Member, household: Household) -> MeResult:
         members = await self._member_repo.list_by_household(household.id)
         return MeResult(member=member, household=household, members=members)
+
+
+class RemoveMember:
+    """Remove another member from the household."""
+
+    def __init__(self, member_repo: MemberRepo) -> None:
+        self._member_repo = member_repo
+
+    async def execute(
+        self, *, household_id: str, actor_member_id: str, target_member_id: str
+    ) -> None:
+        if target_member_id == actor_member_id:
+            raise ValidationError(
+                "لا يمكنك إزالة نفسك من العائلة",
+                code="cannot_remove_self",
+            )
+        deleted = await self._member_repo.delete(household_id, target_member_id)
+        if not deleted:
+            raise NotFoundError("Member not found")

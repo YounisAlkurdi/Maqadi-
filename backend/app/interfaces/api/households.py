@@ -81,3 +81,17 @@ async def get_me(
         household=HouseholdOut.from_domain(result.household),
         members=[MemberOut.from_domain(m) for m in result.members],
     )
+
+
+@router.delete("/households/members/{member_id}", status_code=status.HTTP_204_NO_CONTENT)
+async def remove_member(
+    member_id: str,
+    auth: AuthDep,
+    container: ContainerDep,
+) -> None:
+    member, household = auth
+    await container.remove_member.execute(
+        household_id=household.id,
+        actor_member_id=member.id,
+        target_member_id=member_id,
+    )

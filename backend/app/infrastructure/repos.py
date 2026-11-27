@@ -146,6 +146,19 @@ class SqlMemberRepo:
             rows = (await session.execute(stmt)).scalars().all()
             return [_to_member(row) for row in rows]
 
+    async def delete(self, household_id: str, member_id: str) -> bool:
+        async with self._session_factory() as session:
+            stmt = select(MemberORM).where(
+                MemberORM.id == member_id,
+                MemberORM.household_id == household_id,
+            )
+            row = (await session.execute(stmt)).scalar_one_or_none()
+            if row is None:
+                return False
+            await session.delete(row)
+            await session.commit()
+            return True
+
 
 class SqlItemRepo:
     """SQLAlchemy implementation of ItemRepo."""
