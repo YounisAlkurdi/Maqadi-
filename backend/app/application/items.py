@@ -274,6 +274,16 @@ class SetStatus:
         return saved
 
 
+class ListRecentBought:
+    """Return the most-recent bought items for a household (history view)."""
+
+    def __init__(self, item_repo: ItemRepo) -> None:
+        self._item_repo = item_repo
+
+    async def execute(self, *, household_id: str, limit: int = 50) -> list[Item]:
+        return await self._item_repo.list_recent_bought(household_id, limit)
+
+
 class ArchiveBought:
     """Soft-archive bought items older than N hours."""
 

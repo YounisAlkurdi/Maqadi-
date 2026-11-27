@@ -10,6 +10,7 @@ from app.interfaces.schemas import (
     ClearBoughtRequest,
     ClearBoughtResponse,
     CreateItemRequest,
+    ItemHistoryResponse,
     ItemOut,
     ListItemsResponse,
     SetStatusRequest,
@@ -54,6 +55,17 @@ async def create_item(
         urgency=body.urgency,
     )
     return ItemOut.from_domain(item)
+
+
+@router.get("/history", response_model=ItemHistoryResponse)
+async def get_item_history(
+    auth: AuthDep,
+    container: ContainerDep,
+    limit: Annotated[int, Query(ge=1, le=200)] = 50,
+) -> ItemHistoryResponse:
+    _, household = auth
+    items = await container.list_recent_bought.execute(household_id=household.id, limit=limit)
+    return ItemHistoryResponse(items=[ItemOut.from_domain(i) for i in items])
 
 
 @router.patch("/{item_id}", response_model=ItemOut)

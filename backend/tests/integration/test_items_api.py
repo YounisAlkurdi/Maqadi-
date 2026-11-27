@@ -144,3 +144,38 @@ def test_items_cross_household_isolation(client: TestClient) -> None:
         headers=_auth(hh2["token"]),
     )
     assert status_other.status_code == 404
+
+
+def test_items_history_and_household_isolation(client: TestClient) -> None:
+    hh1 = _create_household(client, "بيت 1", "أمي")
+    hh2 = _create_household(client, "بيت 2", "خالد")
+
+    # Create two items in hh1: mark one bought, keep one open
+    bought_item = client.post(
+        "/api/v1/items",
+        json={"name": "حليب", "category": "dairy_eggs"},
+        headers=_auth(hh1["token"]),
+    ).json()
+    client.post(
+        f"/api/v1/items/{bought_item['id']}/status",
+        json={"status": "bought"},
+        headers=_auth(hh1["token"]),
+    )
+    client.post(
+        "/api/v1/items",
+        json={"name": "خبز", "category": "bakery"},
+        headers=_auth(hh1["token"]),
+    )
+
+    # Archive bought item -> should still appear in history
+    client.post("/api/v1/items/clear-bought", headers=_auth(hh1["token"]))
+
+    hist_res = client.get("/api/v1/items/history?limit=50", headers=_auth(hh1["token"]))
+    assert hist_res.status_code == 200
+    hist_items = hist_res.json()["items"]
+    assert [i["id"] for i in hist_items] == [bought_item["id"]]
+
+    # hh2 must not see hh1's history
+    hh2_hist = client.get("/api/v1/items/history?limit=50", headers=_auth(hh2["token"]))
+    assert hh2_hist.status_code == 200
+    assert hh2_hist.json()["items"] == []

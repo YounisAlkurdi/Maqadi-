@@ -16,6 +16,7 @@ from app.application.items import (
     AddItem,
     ArchiveBought,
     ListItems,
+    ListRecentBought,
     SetStatus,
     UpdateItem,
 )
@@ -46,6 +47,7 @@ class AppContainer:
     update_item: UpdateItem
     set_status: SetStatus
     archive_bought: ArchiveBought
+    list_recent_bought: ListRecentBought
     preview_paste: PreviewPaste
     confirm_paste: ConfirmPaste
 
@@ -88,6 +90,7 @@ def build_container(settings: Settings) -> tuple[AppContainer, object]:
         update_item=UpdateItem(item_repo, clock),
         set_status=SetStatus(item_repo, clock),
         archive_bought=ArchiveBought(item_repo, clock),
+        list_recent_bought=ListRecentBought(item_repo),
         preview_paste=PreviewPaste(
             extractor, item_repo, member_repo, max_paste_chars=settings.max_paste_chars
         ),
