@@ -75,6 +75,19 @@ class FakeMemberRepo:
             key=lambda m: m.created_at,
         )
 
+    async def update_token_and_color(self, member_id: str, token_hash: str, color: str) -> Member:
+        existing = self._by_id[member_id]
+        updated = Member(
+            id=existing.id,
+            household_id=existing.household_id,
+            display_name=existing.display_name,
+            color=color,
+            token_hash=token_hash,
+            created_at=existing.created_at,
+        )
+        self._by_id[member_id] = updated
+        return updated
+
     async def delete(self, household_id: str, member_id: str) -> bool:
         member = self._by_id.get(member_id)
         if member is None or member.household_id != household_id:

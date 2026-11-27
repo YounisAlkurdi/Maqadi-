@@ -146,6 +146,17 @@ class SqlMemberRepo:
             rows = (await session.execute(stmt)).scalars().all()
             return [_to_member(row) for row in rows]
 
+    async def update_token_and_color(self, member_id: str, token_hash: str, color: str) -> Member:
+        async with self._session_factory() as session:
+            row = await session.get(MemberORM, member_id)
+            if row is None:
+                raise NotFoundError("Member not found")
+            row.token_hash = token_hash
+            row.color = color
+            await session.commit()
+            await session.refresh(row)
+            return _to_member(row)
+
     async def delete(self, household_id: str, member_id: str) -> bool:
         async with self._session_factory() as session:
             stmt = select(MemberORM).where(

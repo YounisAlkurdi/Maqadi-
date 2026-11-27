@@ -159,7 +159,7 @@ async def test_rotate_invite_code_invalidates_old_code() -> None:
     assert await hh_repo.get_by_invite_code(new_code) is not None
 
 
-async def test_join_rejects_duplicate_display_name_in_same_household() -> None:
+async def test_join_with_existing_display_name_rejoins_same_member() -> None:
     hh_repo = FakeHouseholdRepo()
     mem_repo = FakeMemberRepo()
     clock = FakeClock()
@@ -172,14 +172,17 @@ async def test_join_rejects_duplicate_display_name_in_same_household() -> None:
     )
     join_uc = JoinHousehold(hh_repo, mem_repo, limiter, clock)
 
-    with pytest.raises(ValidationError) as exc_info:
-        await join_uc.execute(
-            invite_code=created.invite_code,
-            display_name="امي",
-            color=MEMBER_COLORS[1],
-            client_ip="127.0.0.1",
-        )
-    assert exc_info.value.code == "duplicate_member_name"
+    rejoined = await join_uc.execute(
+        invite_code=created.invite_code,
+        display_name="امي",
+        color=MEMBER_COLORS[1],
+        client_ip="127.0.0.1",
+    )
+    assert rejoined.member.id == created.member.id
+    assert rejoined.member.color == MEMBER_COLORS[1]
+    assert rejoined.member_token != created.member_token
+    members = await mem_repo.list_by_household(created.household.id)
+    assert len(members) == 1
 
 
 async def test_remove_member_validates_self_and_cross_household() -> None:

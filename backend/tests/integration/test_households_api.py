@@ -151,7 +151,7 @@ def test_join_rate_limit_returns_429(client: TestClient) -> None:
     assert blocked.json()["error"]["code"] == "rate_limited"
 
 
-def test_duplicate_member_name_and_remove_member_isolation(client: TestClient) -> None:
+def test_rejoin_existing_member_and_remove_member_isolation(client: TestClient) -> None:
     hh1 = client.post(
         "/api/v1/households",
         json={"household_name": "بيت 1", "display_name": "أمي", "color": MEMBER_COLORS[0]},
@@ -161,8 +161,8 @@ def test_duplicate_member_name_and_remove_member_isolation(client: TestClient) -
         json={"household_name": "بيت 2", "display_name": "خالد", "color": MEMBER_COLORS[1]},
     ).json()
 
-    # Duplicate normalized name in same household -> 422
-    dup_join = client.post(
+    # Rejoining with the same normalized name in same household returns same member with a new token
+    rejoin = client.post(
         "/api/v1/households/join",
         json={
             "invite_code": hh1["invite_code"],
@@ -170,10 +170,26 @@ def test_duplicate_member_name_and_remove_member_isolation(client: TestClient) -
             "color": MEMBER_COLORS[2],
         },
     )
-    assert dup_join.status_code == 422
-    assert dup_join.json()["error"]["code"] == "duplicate_member_name"
+    assert rejoin.status_code == 200
+    rejoin_data = rejoin.json()
+    assert rejoin_data["member"]["id"] == hh1["member"]["id"]
+    assert rejoin_data["member"]["color"] == MEMBER_COLORS[2]
+    assert rejoin_data["member_token"] != hh1["member_token"]
 
-    # Valid join
+    # Old token is invalidated; new token works
+    old_me = client.get(
+        "/api/v1/me",
+        headers={"Authorization": f"Bearer {hh1['member_token']}"},
+    )
+    assert old_me.status_code == 401
+    new_me = client.get(
+        "/api/v1/me",
+        headers={"Authorization": f"Bearer {rejoin_data['member_token']}"},
+    )
+    assert new_me.status_code == 200
+    hh1["member_token"] = rejoin_data["member_token"]
+
+    # Valid join for a second member
     joined = client.post(
         "/api/v1/households/join",
         json={

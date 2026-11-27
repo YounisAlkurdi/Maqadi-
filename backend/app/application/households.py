@@ -182,13 +182,24 @@ class JoinHousehold:
 
         existing_members = await self._member_repo.list_by_household(household.id)
         normalized_name = normalize_ar(clean_display_name)
-        if any(normalize_ar(m.display_name) == normalized_name for m in existing_members):
-            raise ValidationError(
-                "هذا الاسم مستخدم بالفعل في العائلة، اختر اسماً آخر أو أزل العضو القديم",
-                code="duplicate_member_name",
-            )
+        existing_member = next(
+            (m for m in existing_members if normalize_ar(m.display_name) == normalized_name),
+            None,
+        )
 
         raw_token = generate_token()
+        if existing_member is not None:
+            rejoined_member = await self._member_repo.update_token_and_color(
+                existing_member.id,
+                hash_token(raw_token),
+                clean_color,
+            )
+            return JoinHouseholdResult(
+                household=household,
+                member=rejoined_member,
+                member_token=raw_token,
+            )
+
         now = self._clock.now()
         member = Member(
             id=str(uuid.uuid4()),

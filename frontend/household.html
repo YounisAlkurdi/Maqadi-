@@ -74,6 +74,27 @@
     </div>
   </div>
 
+  <div id="logout-dialog-backdrop" class="dialog-backdrop" hidden>
+    <div class="card dialog-card" role="dialog" aria-modal="true" aria-labelledby="logout-dialog-title">
+      <div class="dialog-header">
+        <h2 id="logout-dialog-title" class="dialog-title">تأكيد تسجيل الخروج</h2>
+        <button type="button" id="logout-dialog-close" class="btn btn-text" aria-label="إغلاق">✕</button>
+      </div>
+      <p class="page-subtitle">للعودة لنفس حسابك لاحقاً، ادخل باستخدام كود البيت واسمك الحالي:</p>
+      <div class="invite-code-box">
+        <span id="logout-invite-code" class="invite-code-display">----</span>
+        <button type="button" id="logout-copy-code" class="btn btn-secondary">نسخ الكود</button>
+      </div>
+      <div class="dialog-actions">
+        <span></span>
+        <div class="dialog-actions-end">
+          <button type="button" id="logout-dialog-cancel" class="btn btn-secondary">إلغاء</button>
+          <button type="button" id="logout-dialog-confirm" class="btn btn-danger">تسجيل الخروج</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div id="toast-root"></div>
   <script type="module" src="js/pages/household.js"></script>
 </body>

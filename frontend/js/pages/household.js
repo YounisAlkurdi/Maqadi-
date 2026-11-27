@@ -17,6 +17,12 @@ const removeErrorEl = document.getElementById("remove-dialog-error");
 const removeCloseBtn = document.getElementById("remove-dialog-close");
 const removeCancelBtn = document.getElementById("remove-dialog-cancel");
 const removeConfirmBtn = document.getElementById("remove-dialog-confirm");
+const logoutBackdrop = document.getElementById("logout-dialog-backdrop");
+const logoutInviteCodeEl = document.getElementById("logout-invite-code");
+const logoutCopyCodeBtn = document.getElementById("logout-copy-code");
+const logoutCloseBtn = document.getElementById("logout-dialog-close");
+const logoutCancelBtn = document.getElementById("logout-dialog-cancel");
+const logoutConfirmBtn = document.getElementById("logout-dialog-confirm");
 
 let currentInviteCode = "";
 let currentMembers = [];
@@ -104,7 +110,32 @@ rotateInviteBtn.addEventListener("click", async () => {
   }
 });
 
-logoutBtn.addEventListener("click", () => {
+function openLogoutDialog() {
+  logoutInviteCodeEl.textContent = formatCode(currentInviteCode) || "----";
+  logoutBackdrop.hidden = false;
+  logoutCancelBtn.focus();
+}
+
+function closeLogoutDialog() {
+  logoutBackdrop.hidden = true;
+}
+
+logoutBtn.addEventListener("click", openLogoutDialog);
+logoutCloseBtn.addEventListener("click", closeLogoutDialog);
+logoutCancelBtn.addEventListener("click", closeLogoutDialog);
+logoutBackdrop.addEventListener("click", (e) => {
+  if (e.target === logoutBackdrop) closeLogoutDialog();
+});
+logoutCopyCodeBtn.addEventListener("click", async () => {
+  if (!currentInviteCode) return;
+  try {
+    await navigator.clipboard.writeText(currentInviteCode);
+    showToast("تم نسخ كود البيت");
+  } catch {
+    showToast("انسخ الكود يدوياً: " + currentInviteCode);
+  }
+});
+logoutConfirmBtn.addEventListener("click", () => {
   clearToken();
   window.location.href = "index.html";
 });
@@ -115,7 +146,10 @@ removeBackdrop.addEventListener("click", (e) => {
   if (e.target === removeBackdrop) closeRemoveDialog();
 });
 document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape" && !removeBackdrop.hidden) closeRemoveDialog();
+  if (e.key === "Escape") {
+    if (!removeBackdrop.hidden) closeRemoveDialog();
+    if (!logoutBackdrop.hidden) closeLogoutDialog();
+  }
 });
 
 removeConfirmBtn.addEventListener("click", async () => {
