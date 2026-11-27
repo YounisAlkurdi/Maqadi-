@@ -113,8 +113,14 @@
         <button type="button" id="paste-dialog-close" class="btn btn-text" aria-label="إغلاق">✕</button>
       </div>
       <div class="field">
-        <label for="paste-textarea" class="field-label">الصق الرسائل هنا (لا يتم حفظ النص الأصلي)</label>
+        <div class="paste-label-row">
+          <label for="paste-textarea" class="field-label">الصق الرسائل هنا (لا يتم حفظ النص الأصلي)</label>
+          <button type="button" id="voice-btn" class="btn btn-secondary voice-btn" title="تسجيل صوتي" hidden>
+            🎤 <span id="voice-btn-label">تسجيل</span>
+          </button>
+        </div>
         <textarea id="paste-textarea" class="input paste-textarea" rows="5" maxlength="6000" placeholder="مثلاً:&#10;أم يوسف: جيب لبن وخبز ضروري&#10;أبو يوسف: 2 كيلو بندورة"></textarea>
+        <p id="voice-status" class="voice-status" hidden></p>
       </div>
       <div id="paste-error" class="alert-error" role="alert" hidden></div>
       <div id="paste-preview-section" class="paste-preview-section" hidden>

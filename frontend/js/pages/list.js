@@ -5,6 +5,7 @@ import { suggestCategory } from "../components/keywords.js";
 import { showToast } from "../components/toast.js";
 import { requireAuth } from "../guard.js";
 import { initShell } from "../shell.js";
+import { initVoiceInput } from "../voice.js";
 
 const POLL_INTERVAL_MS = 5000;
 
@@ -435,6 +436,12 @@ const pastePreviewSection = document.getElementById("paste-preview-section");
 const pastePreviewList = document.getElementById("paste-preview-list");
 const pastePreviewCount = document.getElementById("paste-preview-count");
 const pasteEngineBadge = document.getElementById("paste-engine-badge");
+
+// Voice input wiring
+const voiceBtn = document.getElementById("voice-btn");
+const voiceBtnLabel = document.getElementById("voice-btn-label");
+const voiceStatusEl = document.getElementById("voice-status");
+initVoiceInput({ textarea: pasteTextarea, btn: voiceBtn, btnLabel: voiceBtnLabel, statusEl: voiceStatusEl });
 
 function openPasteModal() {
   state.pastePreviewItems = [];

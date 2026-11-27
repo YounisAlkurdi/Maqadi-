@@ -898,6 +898,39 @@
   color: var(--color-urgent);
 }
 
+/* --- Voice Input (Paste Dialog) --- */
+.paste-label-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  margin-bottom: var(--space-1);
+}
+
+.voice-btn {
+  flex-shrink: 0;
+  gap: var(--space-1);
+  font-size: var(--text-secondary);
+}
+
+.voice-btn--active {
+  background-color: var(--color-urgent-tint);
+  border-color: var(--color-urgent);
+  color: var(--color-urgent);
+  animation: pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.65; }
+}
+
+.voice-status {
+  font-size: var(--text-secondary);
+  color: var(--color-urgent);
+  margin-top: var(--space-1);
+}
+
 /* --- History Page (F11) --- */
 .history-card {
   display: flex;
