@@ -21,12 +21,82 @@
           <h1 class="page-title">قائمة المقاضي</h1>
           <p id="list-subtitle" class="page-subtitle">جاري التحميل…</p>
         </header>
+
+        <form id="quick-add-form" class="card quick-add-card" novalidate>
+          <div class="quick-add-row">
+            <label for="quick-add-name" class="sr-only">أضف غرض</label>
+            <input
+              id="quick-add-name"
+              class="input"
+              type="text"
+              maxlength="120"
+              placeholder="أضف غرض… مثلاً: لبن، 2 كيلو بندورة"
+              autocomplete="off"
+            >
+            <button type="submit" class="btn btn-primary">أضف</button>
+          </div>
+          <div id="quick-add-extras" class="quick-add-extras" hidden>
+            <label for="quick-add-qty" class="sr-only">الكمية</label>
+            <input id="quick-add-qty" class="input" type="text" maxlength="80" placeholder="الكمية (اختياري)">
+            <label for="quick-add-category" class="sr-only">التصنيف</label>
+            <select id="quick-add-category" class="input"></select>
+            <button type="button" id="quick-add-urgent" class="toggle-chip" aria-pressed="false">مستعجل</button>
+            <button type="button" id="quick-add-more" class="btn btn-secondary">أضف وكمّل</button>
+          </div>
+          <div id="quick-add-error" class="alert-error" role="alert" hidden></div>
+          <div id="quick-add-dup" class="alert-warning" role="status" hidden>
+            <span id="quick-add-dup-text">موجود أصلاً في القائمة</span>
+            <div class="alert-warning-actions">
+              <button type="button" id="quick-add-dup-edit" class="btn btn-secondary">عدّل الموجود</button>
+              <button type="button" id="quick-add-dup-cancel" class="btn btn-text">إلغاء</button>
+            </div>
+          </div>
+        </form>
+
         <div id="list-error" class="alert-error" role="alert" hidden></div>
         <div id="list-content" class="main-column"></div>
       </div>
     </main>
+    <button type="button" id="fab-add" class="fab-add" aria-label="أضف غرض">+</button>
     <nav id="app-tabbar" class="bottom-tab-bar" aria-label="التنقل السفلي"></nav>
   </div>
+
+  <div id="edit-dialog-backdrop" class="dialog-backdrop" hidden>
+    <form id="edit-dialog-form" class="card dialog-card" role="dialog" aria-modal="true" aria-labelledby="edit-dialog-title" novalidate>
+      <div class="dialog-header">
+        <h2 id="edit-dialog-title" class="dialog-title">تعديل الغرض</h2>
+        <button type="button" id="edit-dialog-close" class="btn btn-text" aria-label="إغلاق">✕</button>
+      </div>
+      <div class="field">
+        <label for="edit-name" class="field-label">الاسم</label>
+        <input id="edit-name" class="input" type="text" maxlength="120" required>
+      </div>
+      <div class="field">
+        <label for="edit-qty" class="field-label">الكمية</label>
+        <input id="edit-qty" class="input" type="text" maxlength="80" placeholder="مثلاً: 2 كيلو">
+      </div>
+      <div class="field">
+        <label for="edit-note" class="field-label">ملاحظة</label>
+        <input id="edit-note" class="input" type="text" maxlength="200" placeholder="اختياري">
+      </div>
+      <div class="field">
+        <label for="edit-category" class="field-label">التصنيف</label>
+        <select id="edit-category" class="input"></select>
+      </div>
+      <div>
+        <button type="button" id="edit-urgent" class="toggle-chip" aria-pressed="false">مستعجل</button>
+      </div>
+      <div id="edit-error" class="alert-error" role="alert" hidden></div>
+      <div class="dialog-actions">
+        <button type="button" id="edit-delete" class="btn btn-text btn-danger-text">احذف الغرض</button>
+        <div class="dialog-actions-end">
+          <button type="button" id="edit-cancel" class="btn btn-secondary">إلغاء</button>
+          <button type="submit" class="btn btn-primary">احفظ</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
   <div id="toast-root"></div>
   <script type="module" src="js/pages/list.js"></script>
 </body>

@@ -7,6 +7,7 @@ export function renderCategoryGroup({
   collapsed = false,
   onToggleCollapse,
   onToggleItem,
+  onEditItem,
 }) {
   const section = document.createElement("section");
   section.className = "card category-group";
@@ -45,7 +46,9 @@ export function renderCategoryGroup({
     const ul = document.createElement("ul");
     ul.className = "item-list";
     for (const item of items) {
-      ul.appendChild(renderItemRow(item, membersById, { onToggle: onToggleItem }));
+      ul.appendChild(
+        renderItemRow(item, membersById, { onToggle: onToggleItem, onEdit: onEditItem })
+      );
     }
     section.appendChild(ul);
   }

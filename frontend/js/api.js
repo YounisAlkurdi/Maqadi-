@@ -99,3 +99,19 @@ export async function setItemStatus(itemId, status) {
   });
   return res.data;
 }
+
+export async function createItem(body) {
+  const res = await apiRequest("/items", {
+    method: "POST",
+    body: JSON.stringify(body),
+  });
+  return res.data;
+}
+
+export async function updateItem(itemId, body) {
+  const res = await apiRequest(`/items/${encodeURIComponent(itemId)}`, {
+    method: "PATCH",
+    body: JSON.stringify(body),
+  });
+  return res.data;
+}
