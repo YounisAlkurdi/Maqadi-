@@ -138,3 +138,16 @@ export async function confirmPaste(items) {
   });
   return res.data;
 }
+
+export async function getItemHistory(limit = 50) {
+  const res = await apiRequest(`/items/history?limit=${encodeURIComponent(limit)}`);
+  return res.data;
+}
+
+export async function clearBoughtItems() {
+  const res = await apiRequest("/items/clear-bought", {
+    method: "POST",
+    body: JSON.stringify({ older_than_hours: 0 }),
+  });
+  return res.data;
+}
