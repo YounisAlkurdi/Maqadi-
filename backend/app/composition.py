@@ -19,9 +19,13 @@ from app.application.items import (
     SetStatus,
     UpdateItem,
 )
+from app.application.paste_import import ConfirmPaste, PreviewPaste
 from app.config import Settings
 from app.infrastructure.clock import SystemClock
 from app.infrastructure.db import create_db_engine, create_session_factory, init_db
+from app.infrastructure.extractors.chain import ChainExtractor
+from app.infrastructure.extractors.llm import LLMItemExtractor
+from app.infrastructure.extractors.rules import RuleBasedExtractor
 from app.infrastructure.rate_limit import InMemoryRateLimiter
 from app.infrastructure.repos import SqlHouseholdRepo, SqlItemRepo, SqlMemberRepo
 
@@ -42,6 +46,8 @@ class AppContainer:
     update_item: UpdateItem
     set_status: SetStatus
     archive_bought: ArchiveBought
+    preview_paste: PreviewPaste
+    confirm_paste: ConfirmPaste
 
 
 def build_container(settings: Settings) -> tuple[AppContainer, object]:
@@ -54,6 +60,18 @@ def build_container(settings: Settings) -> tuple[AppContainer, object]:
     item_repo = SqlItemRepo(session_factory)
     clock = SystemClock()
     rate_limiter = InMemoryRateLimiter(clock)
+    rules_extractor = RuleBasedExtractor()
+    llm_extractor = (
+        LLMItemExtractor(
+            provider=settings.llm_provider,
+            api_key=settings.llm_api_key,
+            model=settings.llm_model,
+            timeout_seconds=settings.llm_timeout_seconds,
+        )
+        if settings.llm_provider.lower().strip() != "none" and settings.llm_api_key
+        else None
+    )
+    extractor = ChainExtractor(primary=llm_extractor, fallback=rules_extractor)
 
     container = AppContainer(
         household_repo=household_repo,
@@ -70,6 +88,10 @@ def build_container(settings: Settings) -> tuple[AppContainer, object]:
         update_item=UpdateItem(item_repo, clock),
         set_status=SetStatus(item_repo, clock),
         archive_bought=ArchiveBought(item_repo, clock),
+        preview_paste=PreviewPaste(
+            extractor, item_repo, member_repo, max_paste_chars=settings.max_paste_chars
+        ),
+        confirm_paste=ConfirmPaste(item_repo, member_repo, clock),
     )
     return container, engine
 

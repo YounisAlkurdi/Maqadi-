@@ -17,9 +17,12 @@
     <aside id="app-sidebar" class="sidebar"></aside>
     <main class="app-main">
       <div class="main-column">
-        <header class="page-header">
-          <h1 class="page-title">قائمة المقاضي</h1>
-          <p id="list-subtitle" class="page-subtitle">جاري التحميل…</p>
+        <header class="page-header page-header-row">
+          <div>
+            <h1 class="page-title">قائمة المقاضي</h1>
+            <p id="list-subtitle" class="page-subtitle">جاري التحميل…</p>
+          </div>
+          <button type="button" id="paste-open-btn" class="btn btn-secondary">لصق من الواتساب</button>
         </header>
 
         <form id="quick-add-form" class="card quick-add-card" novalidate>
@@ -95,6 +98,34 @@
         </div>
       </div>
     </form>
+  </div>
+
+  <div id="paste-dialog-backdrop" class="dialog-backdrop" hidden>
+    <div class="card dialog-card paste-dialog-card" role="dialog" aria-modal="true" aria-labelledby="paste-dialog-title">
+      <div class="dialog-header">
+        <h2 id="paste-dialog-title" class="dialog-title">لصق رسائل الواتساب</h2>
+        <button type="button" id="paste-dialog-close" class="btn btn-text" aria-label="إغلاق">✕</button>
+      </div>
+      <div class="field">
+        <label for="paste-textarea" class="field-label">الصق الرسائل هنا (لا يتم حفظ النص الأصلي)</label>
+        <textarea id="paste-textarea" class="input paste-textarea" rows="5" maxlength="6000" placeholder="مثلاً:&#10;أم يوسف: جيب لبن وخبز ضروري&#10;أبو يوسف: 2 كيلو بندورة"></textarea>
+      </div>
+      <div id="paste-error" class="alert-error" role="alert" hidden></div>
+      <div id="paste-preview-section" class="paste-preview-section" hidden>
+        <div class="paste-preview-header">
+          <span id="paste-preview-count" class="field-label">الأغراض المستخرجة</span>
+          <span id="paste-engine-badge" class="badge-muted"></span>
+        </div>
+        <div id="paste-preview-list" class="paste-preview-list"></div>
+      </div>
+      <div class="dialog-actions">
+        <button type="button" id="paste-cancel-btn" class="btn btn-secondary">إلغاء</button>
+        <div class="dialog-actions-end">
+          <button type="button" id="paste-extract-btn" class="btn btn-secondary">استخرج الأغراض</button>
+          <button type="button" id="paste-confirm-btn" class="btn btn-primary" hidden>أضف المحدد</button>
+        </div>
+      </div>
+    </div>
   </div>
 
   <div id="toast-root"></div>

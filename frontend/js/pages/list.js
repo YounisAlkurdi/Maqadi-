@@ -1,4 +1,4 @@
-import { createItem, listItems, setItemStatus, updateItem } from "../api.js";
+import { confirmPaste, createItem, listItems, previewPaste, setItemStatus, updateItem } from "../api.js";
 import { CATEGORY_META, CATEGORY_ORDER } from "../components/categories.js";
 import { renderCategoryGroup } from "../components/category-group.js";
 import { suggestCategory } from "../components/keywords.js";
@@ -19,6 +19,7 @@ const state = {
   duplicateItemId: null,
   editingItem: null,
   editUrgent: false,
+  pastePreviewItems: [],
 };
 
 const subtitleEl = document.getElementById("list-subtitle");
@@ -420,3 +421,160 @@ async function init() {
 }
 
 init();
+
+// --- WhatsApp Paste Modal ---
+const pasteOpenBtn = document.getElementById("paste-open-btn");
+const pasteBackdrop = document.getElementById("paste-dialog-backdrop");
+const pasteCloseBtn = document.getElementById("paste-dialog-close");
+const pasteCancelBtn = document.getElementById("paste-cancel-btn");
+const pasteTextarea = document.getElementById("paste-textarea");
+const pasteError = document.getElementById("paste-error");
+const pasteExtractBtn = document.getElementById("paste-extract-btn");
+const pasteConfirmBtn = document.getElementById("paste-confirm-btn");
+const pastePreviewSection = document.getElementById("paste-preview-section");
+const pastePreviewList = document.getElementById("paste-preview-list");
+const pastePreviewCount = document.getElementById("paste-preview-count");
+const pasteEngineBadge = document.getElementById("paste-engine-badge");
+
+function openPasteModal() {
+  state.pastePreviewItems = [];
+  pasteTextarea.value = "";
+  pasteError.hidden = true;
+  pastePreviewSection.hidden = true;
+  pastePreviewList.replaceChildren();
+  pasteConfirmBtn.hidden = true;
+  pasteBackdrop.hidden = false;
+  pasteTextarea.focus();
+}
+
+function closePasteModal() {
+  pasteBackdrop.hidden = true;
+  state.pastePreviewItems = [];
+}
+
+function renderPastePreview(data) {
+  pastePreviewList.replaceChildren();
+  state.pastePreviewItems = (data.items || []).map((item) => ({ ...item, selected: true }));
+
+  if (state.pastePreviewItems.length === 0) {
+    pastePreviewSection.hidden = true;
+    pasteConfirmBtn.hidden = true;
+    pasteError.textContent = "ما لقينا أغراض واضحة في النص. جرّب صياغة ثانية.";
+    pasteError.hidden = false;
+    return;
+  }
+
+  pastePreviewCount.textContent = `الأغراض المستخرجة (${state.pastePreviewItems.length})`;
+  pasteEngineBadge.textContent = data.engine === "llm" ? "ذكاء اصطناعي" : "استخراج سريع";
+
+  state.pastePreviewItems.forEach((item, idx) => {
+    const row = document.createElement("label");
+    row.className = "paste-preview-row";
+
+    const cb = document.createElement("input");
+    cb.type = "checkbox";
+    cb.checked = true;
+    cb.addEventListener("change", () => {
+      state.pastePreviewItems[idx].selected = cb.checked;
+      const anySelected = state.pastePreviewItems.some((i) => i.selected);
+      pasteConfirmBtn.disabled = !anySelected;
+    });
+
+    const info = document.createElement("div");
+    info.className = "paste-preview-info";
+
+    const title = document.createElement("div");
+    title.className = "paste-preview-title";
+    title.textContent = item.name;
+
+    const meta = document.createElement("div");
+    meta.className = "paste-preview-meta";
+
+    if (item.quantity_text) {
+      const qtySpan = document.createElement("span");
+      qtySpan.textContent = item.quantity_text;
+      meta.appendChild(qtySpan);
+    }
+
+    const catMeta = CATEGORY_META[item.category] || CATEGORY_META.other;
+    const catSpan = document.createElement("span");
+    catSpan.textContent = catMeta.label;
+    meta.appendChild(catSpan);
+
+    if (item.urgency === "urgent") {
+      const urgSpan = document.createElement("span");
+      urgSpan.textContent = "مستعجل";
+      meta.appendChild(urgSpan);
+    }
+
+    if (item.merge_with_item_id) {
+      const mergeBadge = document.createElement("span");
+      mergeBadge.className = "badge-merge";
+      mergeBadge.textContent = "موجود — سيتم دمجه";
+      meta.appendChild(mergeBadge);
+    }
+
+    info.appendChild(title);
+    info.appendChild(meta);
+    row.appendChild(cb);
+    row.appendChild(info);
+    pastePreviewList.appendChild(row);
+  });
+
+  pastePreviewSection.hidden = false;
+  pasteConfirmBtn.hidden = false;
+  pasteConfirmBtn.disabled = false;
+}
+
+pasteOpenBtn.addEventListener("click", openPasteModal);
+pasteCloseBtn.addEventListener("click", closePasteModal);
+pasteCancelBtn.addEventListener("click", closePasteModal);
+pasteBackdrop.addEventListener("click", (e) => {
+  if (e.target === pasteBackdrop) closePasteModal();
+});
+
+pasteExtractBtn.addEventListener("click", async () => {
+  const text = pasteTextarea.value.trim();
+  if (!text) {
+    pasteError.textContent = "الصق نص الرسائل أولاً";
+    pasteError.hidden = false;
+    return;
+  }
+  pasteError.hidden = true;
+  pasteExtractBtn.disabled = true;
+  pasteExtractBtn.textContent = "جاري الاستخراج…";
+  try {
+    const data = await previewPaste(text);
+    renderPastePreview(data);
+  } catch (err) {
+    pasteError.textContent = err.message || "تعذر استخراج الأغراض";
+    pasteError.hidden = false;
+  } finally {
+    pasteExtractBtn.disabled = false;
+    pasteExtractBtn.textContent = "استخرج الأغراض";
+  }
+});
+
+pasteConfirmBtn.addEventListener("click", async () => {
+  const selected = state.pastePreviewItems
+    .filter((i) => i.selected)
+    .map(({ selected: _s, source_snippet: _sn, confidence: _c, ...rest }) => rest);
+  if (selected.length === 0) return;
+
+  pasteError.hidden = true;
+  pasteConfirmBtn.disabled = true;
+  pasteConfirmBtn.textContent = "جاري الإضافة…";
+  try {
+    const res = await confirmPaste(selected);
+    const count = (res.items || []).length;
+    closePasteModal();
+    await fetchItems({ force: true });
+    showToast(`تمت إضافة ${count} غرض للقائمة`);
+  } catch (err) {
+    pasteError.textContent = err.message || "تعذر حفظ الأغراض";
+    pasteError.hidden = false;
+  } finally {
+    pasteConfirmBtn.disabled = false;
+    pasteConfirmBtn.textContent = "أضف المحدد";
+  }
+});

@@ -155,3 +155,41 @@ class ClearBoughtRequest(BaseModel):
 
 class ClearBoughtResponse(BaseModel):
     archived_count: int
+
+
+class PastePreviewRequest(BaseModel):
+    text: str
+
+
+class PreviewItemOut(BaseModel):
+    name: str
+    quantity_text: str | None
+    category: Category
+    urgency: Urgency
+    requested_by: str | None
+    source_snippet: str
+    confidence: float
+    merge_with_item_id: str | None
+
+
+class PastePreviewResponse(BaseModel):
+    items: list[PreviewItemOut]
+    ignored: list[str]
+    engine: str
+
+
+class ConfirmItemIn(BaseModel):
+    name: str
+    quantity_text: str | None = None
+    category: Category = Category.OTHER
+    urgency: Urgency = Urgency.NORMAL
+    requested_by: str | None = None
+    merge_with_item_id: str | None = None
+
+
+class PasteConfirmRequest(BaseModel):
+    items: list[ConfirmItemIn]
+
+
+class PasteConfirmResponse(BaseModel):
+    items: list[ItemOut]
