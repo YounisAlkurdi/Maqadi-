@@ -11,10 +11,32 @@ const copyInviteBtn = document.getElementById("copy-invite-btn");
 const rotateInviteBtn = document.getElementById("rotate-invite-btn");
 const membersListEl = document.getElementById("members-list");
 const logoutBtn = document.getElementById("logout-btn");
+const removeBackdrop = document.getElementById("remove-dialog-backdrop");
+const removeMessageEl = document.getElementById("remove-dialog-message");
+const removeErrorEl = document.getElementById("remove-dialog-error");
+const removeCloseBtn = document.getElementById("remove-dialog-close");
+const removeCancelBtn = document.getElementById("remove-dialog-cancel");
+const removeConfirmBtn = document.getElementById("remove-dialog-confirm");
 
 let currentInviteCode = "";
 let currentMembers = [];
 let currentActorId = "";
+let pendingRemoveMember = null;
+
+function openRemoveDialog(member) {
+  pendingRemoveMember = member;
+  removeMessageEl.textContent = `هل أنت متأكد من إزالة «${member.display_name}» من البيت؟`;
+  removeErrorEl.hidden = true;
+  removeConfirmBtn.disabled = false;
+  removeConfirmBtn.textContent = "نعم، إزالة العضو";
+  removeBackdrop.hidden = false;
+  removeCancelBtn.focus();
+}
+
+function closeRemoveDialog() {
+  removeBackdrop.hidden = true;
+  pendingRemoveMember = null;
+}
 
 function renderMembers(members, currentMemberId) {
   currentMembers = members;
@@ -46,21 +68,7 @@ function renderMembers(members, currentMemberId) {
       removeBtn.type = "button";
       removeBtn.className = "btn btn-text member-remove-btn";
       removeBtn.textContent = "إزالة";
-      removeBtn.addEventListener("click", async () => {
-        if (!window.confirm(`إزالة "${member.display_name}" من البيت؟`)) return;
-        errorEl.hidden = true;
-        removeBtn.disabled = true;
-        try {
-          await removeMember(member.id);
-          const next = currentMembers.filter((m) => m.id !== member.id);
-          renderMembers(next, currentActorId);
-          showToast(`تمت إزالة ${member.display_name}`);
-        } catch (err) {
-          errorEl.textContent = err.message || "تعذر إزالة العضو";
-          errorEl.hidden = false;
-          removeBtn.disabled = false;
-        }
-      });
+      removeBtn.addEventListener("click", () => openRemoveDialog(member));
       li.appendChild(removeBtn);
     }
 
@@ -99,6 +107,35 @@ rotateInviteBtn.addEventListener("click", async () => {
 logoutBtn.addEventListener("click", () => {
   clearToken();
   window.location.href = "index.html";
+});
+
+removeCloseBtn.addEventListener("click", closeRemoveDialog);
+removeCancelBtn.addEventListener("click", closeRemoveDialog);
+removeBackdrop.addEventListener("click", (e) => {
+  if (e.target === removeBackdrop) closeRemoveDialog();
+});
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape" && !removeBackdrop.hidden) closeRemoveDialog();
+});
+
+removeConfirmBtn.addEventListener("click", async () => {
+  if (!pendingRemoveMember) return;
+  const target = pendingRemoveMember;
+  removeErrorEl.hidden = true;
+  removeConfirmBtn.disabled = true;
+  removeConfirmBtn.textContent = "جاري الإزالة…";
+  try {
+    await removeMember(target.id);
+    const next = currentMembers.filter((m) => m.id !== target.id);
+    closeRemoveDialog();
+    renderMembers(next, currentActorId);
+    showToast(`تمت إزالة ${target.display_name}`);
+  } catch (err) {
+    removeErrorEl.textContent = err.message || "تعذر إزالة العضو";
+    removeErrorEl.hidden = false;
+    removeConfirmBtn.disabled = false;
+    removeConfirmBtn.textContent = "نعم، إزالة العضو";
+  }
 });
 
 async function init() {
