@@ -110,6 +110,11 @@ rotateInviteBtn.addEventListener("click", async () => {
   }
 });
 
+function formatCode(code) {
+  if (!code || code.length !== 8) return code || "";
+  return `${code.slice(0, 4)}-${code.slice(4)}`;
+}
+
 function openLogoutDialog() {
   logoutInviteCodeEl.textContent = formatCode(currentInviteCode) || "----";
   logoutBackdrop.hidden = false;
