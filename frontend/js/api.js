@@ -83,3 +83,19 @@ export async function getMe() {
   const res = await apiRequest("/me");
   return res.data;
 }
+
+export async function listItems(etag = null) {
+  const headers = {};
+  if (etag) {
+    headers["If-None-Match"] = etag;
+  }
+  return apiRequest("/items", { headers });
+}
+
+export async function setItemStatus(itemId, status) {
+  const res = await apiRequest(`/items/${encodeURIComponent(itemId)}/status`, {
+    method: "POST",
+    body: JSON.stringify({ status }),
+  });
+  return res.data;
+}
