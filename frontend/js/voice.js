@@ -18,7 +18,15 @@ export function isVoiceSupported() {
  *            btnLabel: HTMLElement, statusEl: HTMLElement }} opts
  */
 export function initVoiceInput({ textarea, btn, btnLabel, statusEl }) {
-  if (!isVoiceSupported()) return;
+  if (!btn || !textarea) return;
+
+  if (!isVoiceSupported()) {
+    btn.addEventListener("click", () => {
+      statusEl.hidden = false;
+      statusEl.textContent = "الإدخال الصوتي غير مدعوم في هذا المتصفح (جرّب Chrome أو Edge).";
+    });
+    return;
+  }
 
   const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
   const recognition = new SR();
@@ -29,13 +37,11 @@ export function initVoiceInput({ textarea, btn, btnLabel, statusEl }) {
   let listening = false;
   let finalText = "";
 
-  btn.hidden = false;
-
   function setListening(active) {
     listening = active;
     btn.setAttribute("aria-pressed", String(active));
     btn.classList.toggle("voice-btn--active", active);
-    btnLabel.textContent = active ? "جاري التسجيل…" : "تسجيل";
+    btnLabel.textContent = active ? "جاري…" : "صوت";
     statusEl.hidden = !active;
     if (active) statusEl.textContent = "🎙 تكلم الآن…";
   }
@@ -59,7 +65,9 @@ export function initVoiceInput({ textarea, btn, btnLabel, statusEl }) {
     setListening(false);
     statusEl.hidden = true;
     if (finalText.trim()) {
-      const sep = textarea.value.trim() ? "\n" : "";
+      const sep = textarea.value.trim()
+        ? textarea.tagName === "TEXTAREA" ? "\n" : " "
+        : "";
       textarea.value = textarea.value.trimEnd() + sep + finalText.trim();
       textarea.dispatchEvent(new Event("input", { bubbles: true }));
       textarea.focus();

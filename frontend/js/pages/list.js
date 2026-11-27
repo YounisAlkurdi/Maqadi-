@@ -42,6 +42,12 @@ const quickDupEdit = document.getElementById("quick-add-dup-edit");
 const quickDupCancel = document.getElementById("quick-add-dup-cancel");
 const fabAdd = document.getElementById("fab-add");
 
+// Voice input wiring (next to Quick-Add)
+const voiceBtn = document.getElementById("voice-btn");
+const voiceBtnLabel = document.getElementById("voice-btn-label");
+const voiceStatusEl = document.getElementById("voice-status");
+initVoiceInput({ textarea: quickName, btn: voiceBtn, btnLabel: voiceBtnLabel, statusEl: voiceStatusEl });
+
 // Edit dialog elements
 const editBackdrop = document.getElementById("edit-dialog-backdrop");
 const editForm = document.getElementById("edit-dialog-form");
@@ -436,12 +442,6 @@ const pastePreviewSection = document.getElementById("paste-preview-section");
 const pastePreviewList = document.getElementById("paste-preview-list");
 const pastePreviewCount = document.getElementById("paste-preview-count");
 const pasteEngineBadge = document.getElementById("paste-engine-badge");
-
-// Voice input wiring
-const voiceBtn = document.getElementById("voice-btn");
-const voiceBtnLabel = document.getElementById("voice-btn-label");
-const voiceStatusEl = document.getElementById("voice-status");
-initVoiceInput({ textarea: pasteTextarea, btn: voiceBtn, btnLabel: voiceBtnLabel, statusEl: voiceStatusEl });
 
 function openPasteModal() {
   state.pastePreviewItems = [];

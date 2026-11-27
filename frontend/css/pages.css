@@ -520,6 +520,7 @@
 
 .quick-add-row .input {
   flex: 1;
+  min-width: 0;
 }
 
 .quick-add-extras {
@@ -898,15 +899,7 @@
   color: var(--color-urgent);
 }
 
-/* --- Voice Input (Paste Dialog) --- */
-.paste-label-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-2);
-  margin-bottom: var(--space-1);
-}
-
+/* --- Voice Input (Quick-Add) --- */
 .voice-btn {
   flex-shrink: 0;
   gap: var(--space-1);
@@ -928,7 +921,7 @@
 .voice-status {
   font-size: var(--text-secondary);
   color: var(--color-urgent);
-  margin-top: var(--space-1);
+  margin: 0;
 }
 
 /* --- History Page (F11) --- */
