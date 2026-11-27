@@ -1,10 +1,12 @@
-# Maqadi — طلبات البيت
+[English](README.md) | [العربية](README.ar.md)
 
-مشروع مشارك في **هاكاثون نمكّن للذكاء الاصطناعي 2026** (22–30 نوفمبر 2026).
+# Maqadi — Shared Household Errands List (طلبات البيت)
 
-موقع ويب عربي (RTL) لمشاركة قائمة طلبات البيت بين أفراد العائلة بدون تسجيل أو تعقيد، مع ميزة استخراج وتصنيف الطلبات بالذكاء الاصطناعي من رسائل الواتساب المتفرقة.
+Built for **Nmkkn AI Hackathon 2026** (November 22–30, 2026).
 
-## التشغيل المحلي
+An Arabic-first (RTL) web application where families share one household shopping and errands list without accounts or passwords. Its signature feature lets you paste messy WhatsApp messages and uses AI (with a rule-based fallback) to extract a clean, categorized list ready for confirmation.
+
+## Local Setup
 
 ```bash
 cd backend && uv sync --extra dev
@@ -12,4 +14,4 @@ cp ../.env.example ../.env
 cd backend && uv run uvicorn app.main:app --reload
 ```
 
-افتح `http://localhost:8000` في المتصفح، و`http://localhost:8000/api/v1/healthz` للتحقق من الخادم.
+Open `http://localhost:8000` in your browser, and `http://localhost:8000/api/v1/healthz` to verify the API health check.
