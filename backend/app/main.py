@@ -6,6 +6,8 @@ from fastapi.staticfiles import StaticFiles
 
 from app.composition import create_lifespan
 from app.config import get_settings
+from app.interfaces.api.errors import register_exception_handlers
+from app.interfaces.api.households import router as households_router
 
 FRONTEND_DIR = Path(__file__).resolve().parents[2] / "frontend"
 
@@ -18,6 +20,8 @@ def create_app() -> FastAPI:
         version="0.1.0",
         lifespan=create_lifespan(settings),
     )
+
+    register_exception_handlers(application)
 
     if settings.cors_origin_list:
         application.add_middleware(
@@ -34,6 +38,7 @@ def create_app() -> FastAPI:
     async def healthz() -> dict[str, str]:
         return {"status": "ok"}
 
+    api_router.include_router(households_router)
     application.include_router(api_router)
 
     if FRONTEND_DIR.is_dir():
