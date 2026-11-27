@@ -54,6 +54,26 @@
     </main>
     <nav id="app-tabbar" class="bottom-tab-bar" aria-label="التنقل السفلي"></nav>
   </div>
+
+  <div id="remove-dialog-backdrop" class="dialog-backdrop" hidden>
+    <div class="card dialog-card" role="dialog" aria-modal="true" aria-labelledby="remove-dialog-title">
+      <div class="dialog-header">
+        <h2 id="remove-dialog-title" class="dialog-title">تأكيد إزالة العضو</h2>
+        <button type="button" id="remove-dialog-close" class="btn btn-text" aria-label="إغلاق">✕</button>
+      </div>
+      <p id="remove-dialog-message" class="page-subtitle"></p>
+      <p class="page-subtitle">سيفقد هذا العضو إمكانية الوصول إلى قائمة البيت فوراً، بينما تبقى الطلبات السابقة محفوظة.</p>
+      <div id="remove-dialog-error" class="alert-error" role="alert" hidden></div>
+      <div class="dialog-actions">
+        <span></span>
+        <div class="dialog-actions-end">
+          <button type="button" id="remove-dialog-cancel" class="btn btn-secondary">إلغاء</button>
+          <button type="button" id="remove-dialog-confirm" class="btn btn-danger">نعم، إزالة العضو</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div id="toast-root"></div>
   <script type="module" src="js/pages/household.js"></script>
 </body>

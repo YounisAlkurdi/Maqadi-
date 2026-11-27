@@ -149,3 +149,63 @@ def test_join_rate_limit_returns_429(client: TestClient) -> None:
     )
     assert blocked.status_code == 429
     assert blocked.json()["error"]["code"] == "rate_limited"
+
+
+def test_duplicate_member_name_and_remove_member_isolation(client: TestClient) -> None:
+    hh1 = client.post(
+        "/api/v1/households",
+        json={"household_name": "بيت 1", "display_name": "أمي", "color": MEMBER_COLORS[0]},
+    ).json()
+    hh2 = client.post(
+        "/api/v1/households",
+        json={"household_name": "بيت 2", "display_name": "خالد", "color": MEMBER_COLORS[1]},
+    ).json()
+
+    # Duplicate normalized name in same household -> 422
+    dup_join = client.post(
+        "/api/v1/households/join",
+        json={
+            "invite_code": hh1["invite_code"],
+            "display_name": "امي",
+            "color": MEMBER_COLORS[2],
+        },
+    )
+    assert dup_join.status_code == 422
+    assert dup_join.json()["error"]["code"] == "duplicate_member_name"
+
+    # Valid join
+    joined = client.post(
+        "/api/v1/households/join",
+        json={
+            "invite_code": hh1["invite_code"],
+            "display_name": "يونس",
+            "color": MEMBER_COLORS[2],
+        },
+    ).json()
+
+    # Cannot remove self -> 422
+    self_del = client.delete(
+        f"/api/v1/households/members/{hh1['member']['id']}",
+        headers={"Authorization": f"Bearer {hh1['member_token']}"},
+    )
+    assert self_del.status_code == 422
+
+    # Household isolation: hh2 cannot remove hh1's member -> 404
+    cross_del = client.delete(
+        f"/api/v1/households/members/{joined['member']['id']}",
+        headers={"Authorization": f"Bearer {hh2['member_token']}"},
+    )
+    assert cross_del.status_code == 404
+
+    # hh1 removes joined member -> 204 and token is invalidated
+    ok_del = client.delete(
+        f"/api/v1/households/members/{joined['member']['id']}",
+        headers={"Authorization": f"Bearer {hh1['member_token']}"},
+    )
+    assert ok_del.status_code == 204
+
+    removed_me = client.get(
+        "/api/v1/me",
+        headers={"Authorization": f"Bearer {joined['member_token']}"},
+    )
+    assert removed_me.status_code == 401

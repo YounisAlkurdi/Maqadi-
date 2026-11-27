@@ -91,6 +91,12 @@ export async function rotateInviteCode() {
   return res.data;
 }
 
+export async function removeMember(memberId) {
+  await apiRequest(`/households/members/${encodeURIComponent(memberId)}`, {
+    method: "DELETE",
+  });
+}
+
 export async function listItems(etag = null) {
   const headers = {};
   if (etag) {

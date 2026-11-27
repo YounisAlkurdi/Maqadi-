@@ -7,6 +7,7 @@ from app.application.households import (
     CreateHousehold,
     GetMe,
     JoinHousehold,
+    RemoveMember,
     RotateInviteCode,
     hash_token,
 )
@@ -156,3 +157,74 @@ async def test_rotate_invite_code_invalidates_old_code() -> None:
     assert new_code != created.invite_code
     assert await hh_repo.get_by_invite_code(created.invite_code) is None
     assert await hh_repo.get_by_invite_code(new_code) is not None
+
+
+async def test_join_rejects_duplicate_display_name_in_same_household() -> None:
+    hh_repo = FakeHouseholdRepo()
+    mem_repo = FakeMemberRepo()
+    clock = FakeClock()
+    limiter = InMemoryRateLimiter(clock)
+
+    created = await CreateHousehold(hh_repo, mem_repo, clock).execute(
+        household_name="بيت أبو أحمد",
+        display_name="أمي",
+        color=MEMBER_COLORS[0],
+    )
+    join_uc = JoinHousehold(hh_repo, mem_repo, limiter, clock)
+
+    with pytest.raises(ValidationError) as exc_info:
+        await join_uc.execute(
+            invite_code=created.invite_code,
+            display_name="امي",
+            color=MEMBER_COLORS[1],
+            client_ip="127.0.0.1",
+        )
+    assert exc_info.value.code == "duplicate_member_name"
+
+
+async def test_remove_member_validates_self_and_cross_household() -> None:
+    hh_repo = FakeHouseholdRepo()
+    mem_repo = FakeMemberRepo()
+    clock = FakeClock()
+    limiter = InMemoryRateLimiter(clock)
+
+    hh1 = await CreateHousehold(hh_repo, mem_repo, clock).execute(
+        household_name="بيت 1",
+        display_name="أمي",
+        color=MEMBER_COLORS[0],
+    )
+    joined = await JoinHousehold(hh_repo, mem_repo, limiter, clock).execute(
+        invite_code=hh1.invite_code,
+        display_name="يونس",
+        color=MEMBER_COLORS[1],
+        client_ip="127.0.0.1",
+    )
+    hh2 = await CreateHousehold(hh_repo, mem_repo, clock).execute(
+        household_name="بيت 2",
+        display_name="خالد",
+        color=MEMBER_COLORS[2],
+    )
+
+    remove_uc = RemoveMember(mem_repo)
+
+    with pytest.raises(ValidationError) as self_err:
+        await remove_uc.execute(
+            household_id=hh1.household.id,
+            actor_member_id=hh1.member.id,
+            target_member_id=hh1.member.id,
+        )
+    assert self_err.value.code == "cannot_remove_self"
+
+    with pytest.raises(NotFoundError):
+        await remove_uc.execute(
+            household_id=hh2.household.id,
+            actor_member_id=hh2.member.id,
+            target_member_id=joined.member.id,
+        )
+
+    await remove_uc.execute(
+        household_id=hh1.household.id,
+        actor_member_id=hh1.member.id,
+        target_member_id=joined.member.id,
+    )
+    assert await mem_repo.get_by_id(joined.member.id) is None

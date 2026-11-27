@@ -75,6 +75,13 @@ class FakeMemberRepo:
             key=lambda m: m.created_at,
         )
 
+    async def delete(self, household_id: str, member_id: str) -> bool:
+        member = self._by_id.get(member_id)
+        if member is None or member.household_id != household_id:
+            return False
+        del self._by_id[member_id]
+        return True
+
 
 class FakeItemRepo:
     def __init__(self) -> None:

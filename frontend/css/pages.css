@@ -650,6 +650,20 @@
   color: var(--color-urgent);
 }
 
+.btn-danger {
+  background-color: var(--color-urgent);
+  color: var(--color-white);
+}
+
+.btn-danger:hover {
+  filter: brightness(0.92);
+}
+
+.btn-danger:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
 @media (max-width: 767px) {
   .fab-add {
     position: fixed;
@@ -877,6 +891,11 @@
 .member-name {
   font-weight: 500;
   color: var(--text);
+}
+
+.member-remove-btn {
+  margin-inline-start: auto;
+  color: var(--color-urgent);
 }
 
 /* --- History Page (F11) --- */
