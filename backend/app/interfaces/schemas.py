@@ -129,6 +129,10 @@ class ListItemsResponse(BaseModel):
     items: list[ItemOut]
 
 
+class ItemHistoryResponse(BaseModel):
+    items: list[ItemOut]
+
+
 class CreateItemRequest(BaseModel):
     name: str
     quantity_text: str | None = None
