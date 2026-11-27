@@ -84,6 +84,13 @@ export async function getMe() {
   return res.data;
 }
 
+export async function rotateInviteCode() {
+  const res = await apiRequest("/households/invite/rotate", {
+    method: "POST",
+  });
+  return res.data;
+}
+
 export async function listItems(etag = null) {
   const headers = {};
   if (etag) {
