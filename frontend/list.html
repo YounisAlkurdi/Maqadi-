@@ -19,12 +19,15 @@
       <div class="main-column">
         <header class="page-header">
           <h1 class="page-title">قائمة المقاضي</h1>
-          <p class="page-subtitle">سيتم بناء القائمة في المرحلة القادمة (F5).</p>
+          <p id="list-subtitle" class="page-subtitle">جاري التحميل…</p>
         </header>
+        <div id="list-error" class="alert-error" role="alert" hidden></div>
+        <div id="list-content" class="main-column"></div>
       </div>
     </main>
     <nav id="app-tabbar" class="bottom-tab-bar" aria-label="التنقل السفلي"></nav>
   </div>
+  <div id="toast-root"></div>
   <script type="module" src="js/pages/list.js"></script>
 </body>
 </html>
